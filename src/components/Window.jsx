@@ -15,7 +15,7 @@ export default function Window({ title, children, onClose }) {
         </button>
       </div>
 
-      <div className="p-5">{children}</div>
+      <div className="max-h-[70vh] overflow-y-auto p-5">{children}</div>
     </div>
   );
 }
