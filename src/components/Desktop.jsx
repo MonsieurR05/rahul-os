@@ -166,47 +166,129 @@ export default function Desktop() {
 
       {openWindows.projects && (
         <Window {...getWindowProps("projects")}>
-          <div className="space-y-4">
-            {projects.map((project) => (
-              <article
-                key={project.title}
-                className="border border-[#3a3a3a] bg-[#202020] p-4"
-              >
-                <div>
-                  <h3 className="font-medium text-[#f2f2f2]">
-                    {project.title}
-                  </h3>
+            <div className="space-y-5">
+        <div>
+        <p className="font-mono text-xs uppercase tracking-[0.18em] text-[#a3a3a3]">
+          case studies
+        </p>
+        <h2 className="mt-2 text-2xl font-semibold text-[#f2f2f2]">
+          Projects
+        </h2>
+        <p className="mt-2 text-sm leading-6 text-[#c9c9c9]">
+          A selection of software and interactive systems, presented as
+          structured portfolio case studies.
+        </p>
+      </div>
 
-                  <p className="mt-1 font-mono text-xs text-[#d97706]">
-                    {project.status}
-                  </p>
-                </div>
+      {projects.map((project) => (
+        <article
+          key={project.title}
+          className="border border-[#3a3a3a] bg-[#202020] p-5"
+        >
+          <div className="flex flex-col gap-3 border-b border-[#3a3a3a] pb-4 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <h3 className="text-xl font-medium text-[#f2f2f2]">
+                {project.title}
+              </h3>
 
-                <p className="mt-3 text-sm leading-6 text-[#c9c9c9]">
-                  {project.description}
+              <p className="mt-1 text-sm text-[#a3a3a3]">
+                {project.type}
+              </p>
+            </div>
+
+            <div className="text-left font-mono text-xs text-[#a3a3a3] sm:text-right">
+              <p>{project.status}</p>
+              <p>{project.timeline}</p>
+            </div>
+          </div>
+
+          <div className="mt-4 grid gap-4 md:grid-cols-[1fr_220px]">
+            <div className="space-y-4">
+              <p className="text-sm leading-6 text-[#c9c9c9]">
+                {project.description}
+              </p>
+
+              <section>
+                <h4 className="font-mono text-xs uppercase tracking-[0.16em] text-[#d97706]">
+                  Problem
+                </h4>
+                <p className="mt-2 text-sm leading-6 text-[#bdbdbd]">
+                  {project.problem}
                 </p>
+              </section>
 
-                <div className="mt-3 flex flex-wrap gap-2">
+              <section>
+                <h4 className="font-mono text-xs uppercase tracking-[0.16em] text-[#d97706]">
+                  Solution
+                </h4>
+                <p className="mt-2 text-sm leading-6 text-[#bdbdbd]">
+                  {project.solution}
+                </p>
+              </section>
+
+              <section>
+                <h4 className="font-mono text-xs uppercase tracking-[0.16em] text-[#d97706]">
+                  Outcome
+                </h4>
+                <p className="mt-2 text-sm leading-6 text-[#bdbdbd]">
+                  {project.outcome}
+                </p>
+              </section>
+            </div>
+
+            <aside className="space-y-4">
+              <div>
+                <h4 className="font-mono text-xs uppercase tracking-[0.16em] text-[#a3a3a3]">
+                  Role
+                </h4>
+                <p className="mt-2 text-sm text-[#f2f2f2]">
+                  {project.role}
+                </p>
+              </div>
+
+              <div>
+                <h4 className="font-mono text-xs uppercase tracking-[0.16em] text-[#a3a3a3]">
+                  Tech
+                </h4>
+                <div className="mt-2 flex flex-wrap gap-2">
                   {project.tech.map((item) => (
                     <span
                       key={item}
-                      className="border border-[#3a3a3a] bg-[#262626] px-2 py-1 text-xs text-[#bdbdbd]"
+                      className="border border-[#3a3a3a] bg-[#262626] px-2 py-1 text-xs text-[#c9c9c9]"
                     >
                       {item}
                     </span>
                   ))}
                 </div>
+              </div>
 
-                <ul className="mt-3 list-inside list-disc space-y-1 text-sm text-[#bdbdbd]">
-                  {project.highlights.map((highlight) => (
-                    <li key={highlight}>{highlight}</li>
+              <div>
+                <h4 className="font-mono text-xs uppercase tracking-[0.16em] text-[#a3a3a3]">
+                  Features
+                </h4>
+                <ul className="mt-2 list-inside list-disc space-y-1 text-xs leading-5 text-[#bdbdbd]">
+                  {project.features.map((feature) => (
+                    <li key={feature}>{feature}</li>
                   ))}
                 </ul>
-              </article>
-            ))}
+              </div>
+
+              <div>
+                <h4 className="font-mono text-xs uppercase tracking-[0.16em] text-[#a3a3a3]">
+                  Links
+                </h4>
+                <div className="mt-2 space-y-1 text-xs text-[#bdbdbd]">
+                  <p>GitHub: {project.links.github}</p>
+                  <p>Live: {project.links.live}</p>
+                </div>
+              </div>
+            </aside>
           </div>
-        </Window>
-      )}
+        </article>
+      ))}
+    </div>
+    </Window>
+    )}
 
       {openWindows.skills && (
         <Window {...getWindowProps("skills")}>

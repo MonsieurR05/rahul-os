@@ -16,39 +16,83 @@ export const profile = {
 export const projects = [
   {
     title: "RahulOS",
+    type: "Personal portfolio system",
+    role: "Designer / Developer",
     status: "In development",
+    timeline: "2026",
     description:
       "An OS-inspired personal portfolio interface where visitors can explore my projects, skills, experience, and background through interactive app windows.",
+    problem:
+      "Most personal portfolios are static and page-based, which makes it harder to show personality, interaction design, and technical thinking.",
+    solution:
+      "RahulOS presents portfolio content as a lightweight operating-system environment, with apps for projects, skills, experience, contact, and a planned AI assistant.",
     tech: ["Next.js", "React", "JavaScript", "Tailwind CSS"],
-    highlights: [
+    features: [
       "Boot-to-desktop portfolio experience",
       "Window-based app interface",
+      "Portfolio content stored as reusable data",
       "Planned AI assistant for portfolio Q&A",
     ],
+    outcome:
+      "The project is currently building toward a more immersive and adaptive portfolio experience that can later support AI-powered visitor guidance.",
+    links: {
+      github: "Add GitHub link later",
+      live: "Add live link later",
+    },
   },
   {
     title: "SectorFlow",
+    type: "Motorsport telemetry platform",
+    role: "Backend developer",
     status: "In development",
+    timeline: "2026",
     description:
       "A motorsport telemetry analysis platform with a Rust backend and JavaScript frontend for exploring driver, telemetry, and comparison data.",
+    problem:
+      "Raw motorsport data can be difficult to understand without clear API routes, comparison tools, and frontend visualisation.",
+    solution:
+      "SectorFlow is being developed as an API-first telemetry platform, starting with backend endpoints for health checks, driver lists, telemetry samples, and driver comparisons.",
     tech: ["Rust", "JavaScript", "REST APIs", "Git"],
-    highlights: [
-      "Backend health, driver, telemetry, and compare endpoints",
-      "Structured API-first development",
-      "Professional Git branching workflow",
+    features: [
+      "Backend health endpoint",
+      "Driver list endpoint",
+      "Telemetry endpoint",
+      "Driver comparison endpoint",
+      "Professional Git branch workflow",
     ],
+    outcome:
+      "The project currently demonstrates backend API structure, JSON responses, and a foundation for a future frontend telemetry dashboard.",
+    links: {
+      github: "Add GitHub link later",
+      live: "Not deployed yet",
+    },
   },
   {
     title: "F1 Explorer",
+    type: "Full-stack data web app",
+    role: "Full-stack developer",
     status: "Completed",
+    timeline: "2025",
     description:
       "A full-stack Formula 1 web application using a Flask API, SQLite database, and Astro/React frontend.",
+    problem:
+      "Formula 1 information is often spread across multiple sources, making it harder to explore drivers, teams, and race-related data in one place.",
+    solution:
+      "F1 Explorer combines a database-backed API with a frontend interface, allowing users to browse and explore Formula 1 data through a web application.",
     tech: ["Python", "Flask", "SQLite", "Astro", "React", "Tailwind CSS"],
-    highlights: [
-      "Full-stack data-driven web app",
-      "API connected frontend",
-      "Formula 1 data exploration interface",
+    features: [
+      "SQLite-backed data model",
+      "Flask API with CORS",
+      "Astro and React frontend",
+      "Tailwind-based interface",
+      "Formula 1 data exploration",
     ],
+    outcome:
+      "The project demonstrates full-stack development, API integration, database usage, and frontend interface design.",
+    links: {
+      github: "Add GitHub link later",
+      live: "Add live link later",
+    },
   },
 ];
 
