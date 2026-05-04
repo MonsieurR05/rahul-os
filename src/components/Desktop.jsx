@@ -23,19 +23,7 @@ export default function Desktop() {
     assistant: false,
   });
 
-  function openApp(appName) {
-    setOpenWindows((current) => ({
-      ...current,
-      [appName]: true,
-    }));
-  }
-
-  function closeApp(appName) {
-    setOpenWindows((current) => ({
-      ...current,
-      [appName]: false,
-    }));
-  }
+  const [activeWindow, setActiveWindow] = useState("home");
 
   const apps = [
     { id: "home", label: "Home" },
@@ -46,6 +34,43 @@ export default function Desktop() {
     { id: "contact", label: "Contact" },
     { id: "assistant", label: "Assistant" },
   ];
+
+  const windowSettings = {
+    home: { title: "Home", position: "center", size: "medium" },
+    about: { title: "About", position: "topLeft", size: "medium" },
+    projects: { title: "Projects", position: "center", size: "large" },
+    skills: { title: "Skills", position: "bottomLeft", size: "medium" },
+    experience: { title: "Experience", position: "topRight", size: "medium" },
+    contact: { title: "Contact", position: "bottomRight", size: "small" },
+    assistant: { title: "Assistant", position: "topRight", size: "small" },
+  };
+
+  function openApp(appName) {
+    setOpenWindows((current) => ({
+      ...current,
+      [appName]: true,
+    }));
+
+    setActiveWindow(appName);
+  }
+
+  function closeApp(appName) {
+    setOpenWindows((current) => ({
+      ...current,
+      [appName]: false,
+    }));
+  }
+
+  function getWindowProps(appName) {
+    return {
+      title: windowSettings[appName].title,
+      position: windowSettings[appName].position,
+      size: windowSettings[appName].size,
+      zIndex: activeWindow === appName ? 40 : 20,
+      onFocus: () => setActiveWindow(appName),
+      onClose: () => closeApp(appName),
+    };
+  }
 
   return (
     <section className="relative min-h-screen overflow-hidden bg-[#1b1b1b] text-[#f2f2f2]">
@@ -89,7 +114,7 @@ export default function Desktop() {
       </main>
 
       {openWindows.home && (
-        <Window title="Home" onClose={() => closeApp("home")}>
+        <Window {...getWindowProps("home")}>
           <div className="space-y-4">
             <div>
               <p className="font-mono text-xs uppercase tracking-[0.18em] text-[#a3a3a3]">
@@ -120,7 +145,7 @@ export default function Desktop() {
       )}
 
       {openWindows.about && (
-        <Window title="About" onClose={() => closeApp("about")}>
+        <Window {...getWindowProps("about")}>
           <div className="space-y-4 text-sm leading-6 text-[#d0d0d0]">
             <p>
               I’m a UK-based Computer Science student interested in building
@@ -140,7 +165,7 @@ export default function Desktop() {
       )}
 
       {openWindows.projects && (
-        <Window title="Projects" onClose={() => closeApp("projects")}>
+        <Window {...getWindowProps("projects")}>
           <div className="space-y-4">
             {projects.map((project) => (
               <article
@@ -184,7 +209,7 @@ export default function Desktop() {
       )}
 
       {openWindows.skills && (
-        <Window title="Skills" onClose={() => closeApp("skills")}>
+        <Window {...getWindowProps("skills")}>
           <div className="space-y-4">
             <div className="border border-[#3a3a3a] bg-[#111111] p-4 font-mono text-sm">
               <p className="text-[#d97706]">$ skills --grouped</p>
@@ -218,7 +243,7 @@ export default function Desktop() {
       )}
 
       {openWindows.experience && (
-        <Window title="Experience" onClose={() => closeApp("experience")}>
+        <Window {...getWindowProps("experience")}>
           <div className="space-y-4">
             {experience.map((item) => (
               <article
@@ -245,7 +270,7 @@ export default function Desktop() {
       )}
 
       {openWindows.contact && (
-        <Window title="Contact" onClose={() => closeApp("contact")}>
+        <Window {...getWindowProps("contact")}>
           <div className="space-y-3 text-sm text-[#d0d0d0]">
             <p className="text-[#a3a3a3]">Contact links and profiles.</p>
 
@@ -286,7 +311,7 @@ export default function Desktop() {
       )}
 
       {openWindows.assistant && (
-        <Window title="Assistant" onClose={() => closeApp("assistant")}>
+        <Window {...getWindowProps("assistant")}>
           <div className="space-y-4">
             <div className="border border-[#3a3a3a] bg-[#111111] p-4 font-mono text-sm">
               <p className="text-[#d97706]">$ assistant --status</p>
