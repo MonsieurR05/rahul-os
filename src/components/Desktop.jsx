@@ -5,6 +5,7 @@ import AppIcon from "./AppIcon";
 import Window from "./Window";
 import Taskbar from "./Taskbar";
 import AssistantApp from "./AssistantApp";
+import TerminalApp from "./TerminalApp";
 import {
   profile,
   projects,
@@ -30,7 +31,7 @@ export default function Desktop() {
     { id: "home", label: "Home" },
     { id: "about", label: "About" },
     { id: "projects", label: "Projects" },
-    { id: "skills", label: "Skills" },
+    { id: "skills", label: "Terminal" },
     { id: "experience", label: "Experience" },
     { id: "contact", label: "Contact" },
     { id: "assistant", label: "Assistant" },
@@ -40,7 +41,7 @@ export default function Desktop() {
     home: { title: "Home", position: "center", size: "medium" },
     about: { title: "About", position: "topLeft", size: "medium" },
     projects: { title: "Projects", position: "center", size: "large" },
-    skills: { title: "Skills", position: "bottomLeft", size: "medium" },
+    skills: { title: "Terminal", position: "bottomLeft", size: "large" },
     experience: { title: "Experience", position: "topRight", size: "medium" },
     contact: { title: "Contact", position: "bottomRight", size: "small" },
     assistant: { title: "Assistant", position: "topRight", size: "small" },
@@ -293,35 +294,7 @@ export default function Desktop() {
 
       {openWindows.skills && (
         <Window {...getWindowProps("skills")}>
-          <div className="space-y-4">
-            <div className="border border-[#3a3a3a] bg-[#111111] p-4 font-mono text-sm">
-              <p className="text-[#d97706]">$ skills --grouped</p>
-            </div>
-
-            <div className="grid gap-3 sm:grid-cols-2">
-              {skills.map((group) => (
-                <section
-                  key={group.category}
-                  className="border border-[#3a3a3a] bg-[#202020] p-4"
-                >
-                  <h3 className="text-sm font-medium text-[#f2f2f2]">
-                    {group.category}
-                  </h3>
-
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {group.items.map((item) => (
-                      <span
-                        key={item}
-                        className="border border-[#3a3a3a] bg-[#262626] px-2 py-1 text-xs text-[#c9c9c9]"
-                      >
-                        {item}
-                      </span>
-                    ))}
-                  </div>
-                </section>
-              ))}
-            </div>
-          </div>
+          <TerminalApp />
         </Window>
       )}
 
