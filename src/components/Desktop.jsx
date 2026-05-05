@@ -6,25 +6,20 @@ import Window from "./Window";
 import Taskbar from "./Taskbar";
 import AssistantApp from "./AssistantApp";
 import TerminalApp from "./TerminalApp";
-import {
-  profile,
-  projects,
-  skills,
-  experience,
-  contact,
-} from "@/data/portfolio";
+import { profile, projects, experience, contact } from "@/data/portfolio";
+
+const initialWindows = {
+  home: false,
+  about: false,
+  projects: false,
+  skills: false,
+  experience: false,
+  contact: false,
+  assistant: false,
+};
 
 export default function Desktop() {
-  const [openWindows, setOpenWindows] = useState({
-    home: false,
-    about: false,
-    projects: false,
-    skills: false,
-    experience: false,
-    contact: false,
-    assistant: false,
-  });
-
+  const [openWindows, setOpenWindows] = useState(initialWindows);
   const [activeWindow, setActiveWindow] = useState("home");
 
   const apps = [
@@ -39,19 +34,19 @@ export default function Desktop() {
 
   const windowSettings = {
     home: { title: "Home", position: "center", size: "medium" },
-    about: { title: "About", position: "topLeft", size: "medium" },
+    about: { title: "About", position: "upperLeft", size: "medium" },
     projects: { title: "Projects", position: "center", size: "large" },
-    skills: { title: "Terminal", position: "bottomLeft", size: "large" },
-    experience: { title: "Experience", position: "topRight", size: "medium" },
-    contact: { title: "Contact", position: "bottomRight", size: "small" },
-    assistant: { title: "Assistant", position: "topRight", size: "small" },
+    skills: { title: "Terminal", position: "lowerLeft", size: "large" },
+    experience: { title: "Experience", position: "experienceRight", size: "medium" },
+    contact: { title: "Contact", position: "lowerRight", size: "small" },
+    assistant: { title: "Assistant", position: "center", size: "assistant" },
   };
 
   function openApp(appName) {
-    setOpenWindows((current) => ({
-      ...current,
+    setOpenWindows({
+      ...initialWindows,
       [appName]: true,
-    }));
+    });
 
     setActiveWindow(appName);
   }
@@ -78,13 +73,13 @@ export default function Desktop() {
     <section className="relative min-h-screen overflow-hidden bg-[#1b1b1b] text-[#f2f2f2]">
       <Taskbar />
 
-      <main className="flex min-h-screen items-center justify-center px-6 pb-12 pt-10">
+      <main className="flex min-h-screen items-center justify-center px-4 pb-10 pt-16 sm:px-6 md:pt-10">
         <section className="w-full max-w-4xl text-center">
           <p className="font-mono text-xs uppercase tracking-[0.22em] text-[#a3a3a3]">
             local portfolio environment
           </p>
 
-          <h1 className="mt-4 text-5xl font-semibold tracking-tight">
+          <h1 className="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl">
             RahulOS
           </h1>
 
@@ -93,7 +88,7 @@ export default function Desktop() {
             skills, experience, and background.
           </p>
 
-          <div className="mx-auto mt-10 grid max-w-2xl grid-cols-2 gap-3 sm:grid-cols-4">
+          <div className="mx-auto mt-8 grid max-w-2xl grid-cols-2 gap-2 sm:mt-10 sm:grid-cols-4 sm:gap-3">
             {apps.map((app) => (
               <AppIcon
                 key={app.id}
@@ -103,13 +98,13 @@ export default function Desktop() {
             ))}
           </div>
 
-          <div className="mx-auto mt-10 max-w-2xl border border-[#3a3a3a] bg-[#222222] p-4 text-left">
+          <div className="mx-auto mt-8 max-w-2xl border border-[#3a3a3a] bg-[#222222] p-4 text-left sm:mt-10">
             <p className="font-mono text-sm text-[#d97706]">$ status</p>
 
             <div className="mt-3 grid gap-2 font-mono text-xs text-[#a3a3a3] sm:grid-cols-3">
               <p>profile: loaded</p>
               <p>projects: {projects.length}</p>
-              <p>assistant: offline</p>
+              <p>assistant: local-data</p>
             </div>
           </div>
         </section>
@@ -168,129 +163,131 @@ export default function Desktop() {
 
       {openWindows.projects && (
         <Window {...getWindowProps("projects")}>
-            <div className="space-y-5">
-        <div>
-        <p className="font-mono text-xs uppercase tracking-[0.18em] text-[#a3a3a3]">
-          case studies
-        </p>
-        <h2 className="mt-2 text-2xl font-semibold text-[#f2f2f2]">
-          Projects
-        </h2>
-        <p className="mt-2 text-sm leading-6 text-[#c9c9c9]">
-          A selection of software and interactive systems, presented as
-          structured portfolio case studies.
-        </p>
-      </div>
-
-      {projects.map((project) => (
-        <article
-          key={project.title}
-          className="border border-[#3a3a3a] bg-[#202020] p-5"
-        >
-          <div className="flex flex-col gap-3 border-b border-[#3a3a3a] pb-4 sm:flex-row sm:items-start sm:justify-between">
+          <div className="space-y-5">
             <div>
-              <h3 className="text-xl font-medium text-[#f2f2f2]">
-                {project.title}
-              </h3>
+              <p className="font-mono text-xs uppercase tracking-[0.18em] text-[#a3a3a3]">
+                case studies
+              </p>
 
-              <p className="mt-1 text-sm text-[#a3a3a3]">
-                {project.type}
+              <h2 className="mt-2 text-2xl font-semibold text-[#f2f2f2]">
+                Projects
+              </h2>
+
+              <p className="mt-2 text-sm leading-6 text-[#c9c9c9]">
+                A selection of software and interactive systems, presented as
+                structured portfolio case studies.
               </p>
             </div>
 
-            <div className="text-left font-mono text-xs text-[#a3a3a3] sm:text-right">
-              <p>{project.status}</p>
-              <p>{project.timeline}</p>
-            </div>
-          </div>
+            {projects.map((project) => (
+              <article
+                key={project.title}
+                className="border border-[#3a3a3a] bg-[#202020] p-5"
+              >
+                <div className="flex flex-col gap-3 border-b border-[#3a3a3a] pb-4 sm:flex-row sm:items-start sm:justify-between">
+                  <div>
+                    <h3 className="text-xl font-medium text-[#f2f2f2]">
+                      {project.title}
+                    </h3>
 
-          <div className="mt-4 grid gap-4 md:grid-cols-[1fr_220px]">
-            <div className="space-y-4">
-              <p className="text-sm leading-6 text-[#c9c9c9]">
-                {project.description}
-              </p>
+                    <p className="mt-1 text-sm text-[#a3a3a3]">
+                      {project.type}
+                    </p>
+                  </div>
 
-              <section>
-                <h4 className="font-mono text-xs uppercase tracking-[0.16em] text-[#d97706]">
-                  Problem
-                </h4>
-                <p className="mt-2 text-sm leading-6 text-[#bdbdbd]">
-                  {project.problem}
-                </p>
-              </section>
-
-              <section>
-                <h4 className="font-mono text-xs uppercase tracking-[0.16em] text-[#d97706]">
-                  Solution
-                </h4>
-                <p className="mt-2 text-sm leading-6 text-[#bdbdbd]">
-                  {project.solution}
-                </p>
-              </section>
-
-              <section>
-                <h4 className="font-mono text-xs uppercase tracking-[0.16em] text-[#d97706]">
-                  Outcome
-                </h4>
-                <p className="mt-2 text-sm leading-6 text-[#bdbdbd]">
-                  {project.outcome}
-                </p>
-              </section>
-            </div>
-
-            <aside className="space-y-4">
-              <div>
-                <h4 className="font-mono text-xs uppercase tracking-[0.16em] text-[#a3a3a3]">
-                  Role
-                </h4>
-                <p className="mt-2 text-sm text-[#f2f2f2]">
-                  {project.role}
-                </p>
-              </div>
-
-              <div>
-                <h4 className="font-mono text-xs uppercase tracking-[0.16em] text-[#a3a3a3]">
-                  Tech
-                </h4>
-                <div className="mt-2 flex flex-wrap gap-2">
-                  {project.tech.map((item) => (
-                    <span
-                      key={item}
-                      className="border border-[#3a3a3a] bg-[#262626] px-2 py-1 text-xs text-[#c9c9c9]"
-                    >
-                      {item}
-                    </span>
-                  ))}
+                  <div className="text-left font-mono text-xs text-[#a3a3a3] sm:text-right">
+                    <p>{project.status}</p>
+                    <p>{project.timeline}</p>
+                  </div>
                 </div>
-              </div>
 
-              <div>
-                <h4 className="font-mono text-xs uppercase tracking-[0.16em] text-[#a3a3a3]">
-                  Features
-                </h4>
-                <ul className="mt-2 list-inside list-disc space-y-1 text-xs leading-5 text-[#bdbdbd]">
-                  {project.features.map((feature) => (
-                    <li key={feature}>{feature}</li>
-                  ))}
-                </ul>
-              </div>
+                <div className="mt-4 grid gap-4 md:grid-cols-[1fr_220px]">
+                  <div className="space-y-4">
+                    <p className="text-sm leading-6 text-[#c9c9c9]">
+                      {project.description}
+                    </p>
 
-              <div>
-                <h4 className="font-mono text-xs uppercase tracking-[0.16em] text-[#a3a3a3]">
-                  Links
-                </h4>
-                <div className="mt-2 space-y-1 text-xs text-[#bdbdbd]">
-                  <p>GitHub: {project.links.github}</p>
-                  <p>Live: {project.links.live}</p>
+                    <section>
+                      <h4 className="font-mono text-xs uppercase tracking-[0.16em] text-[#d97706]">
+                        Problem
+                      </h4>
+                      <p className="mt-2 text-sm leading-6 text-[#bdbdbd]">
+                        {project.problem}
+                      </p>
+                    </section>
+
+                    <section>
+                      <h4 className="font-mono text-xs uppercase tracking-[0.16em] text-[#d97706]">
+                        Solution
+                      </h4>
+                      <p className="mt-2 text-sm leading-6 text-[#bdbdbd]">
+                        {project.solution}
+                      </p>
+                    </section>
+
+                    <section>
+                      <h4 className="font-mono text-xs uppercase tracking-[0.16em] text-[#d97706]">
+                        Outcome
+                      </h4>
+                      <p className="mt-2 text-sm leading-6 text-[#bdbdbd]">
+                        {project.outcome}
+                      </p>
+                    </section>
+                  </div>
+
+                  <aside className="space-y-4">
+                    <div>
+                      <h4 className="font-mono text-xs uppercase tracking-[0.16em] text-[#a3a3a3]">
+                        Role
+                      </h4>
+                      <p className="mt-2 text-sm text-[#f2f2f2]">
+                        {project.role}
+                      </p>
+                    </div>
+
+                    <div>
+                      <h4 className="font-mono text-xs uppercase tracking-[0.16em] text-[#a3a3a3]">
+                        Tech
+                      </h4>
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        {project.tech.map((item) => (
+                          <span
+                            key={item}
+                            className="border border-[#3a3a3a] bg-[#262626] px-2 py-1 text-xs text-[#c9c9c9]"
+                          >
+                            {item}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <h4 className="font-mono text-xs uppercase tracking-[0.16em] text-[#a3a3a3]">
+                        Features
+                      </h4>
+                      <ul className="mt-2 list-inside list-disc space-y-1 text-xs leading-5 text-[#bdbdbd]">
+                        {project.features.map((feature) => (
+                          <li key={feature}>{feature}</li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div>
+                      <h4 className="font-mono text-xs uppercase tracking-[0.16em] text-[#a3a3a3]">
+                        Links
+                      </h4>
+                      <div className="mt-2 space-y-1 text-xs text-[#bdbdbd]">
+                        <p>GitHub: {project.links.github}</p>
+                        <p>Live: {project.links.live}</p>
+                      </div>
+                    </div>
+                  </aside>
                 </div>
-              </div>
-            </aside>
+              </article>
+            ))}
           </div>
-        </article>
-      ))}
-    </div>
-    </Window>
-    )}
+        </Window>
+      )}
 
       {openWindows.skills && (
         <Window {...getWindowProps("skills")}>
@@ -298,136 +295,136 @@ export default function Desktop() {
         </Window>
       )}
 
-        {openWindows.experience && (
-  <Window {...getWindowProps("experience")}>
-    <div className="space-y-5">
-      <div>
-        <p className="font-mono text-xs uppercase tracking-[0.18em] text-[#a3a3a3]">
-          background
-        </p>
-
-        <h2 className="mt-2 text-2xl font-semibold text-[#f2f2f2]">
-          Experience
-        </h2>
-
-        <p className="mt-2 text-sm leading-6 text-[#c9c9c9]">
-          A summary of my education, work experience, and technical background.
-        </p>
-      </div>
-
-      {experience.map((item) => (
-        <article
-          key={`${item.role}-${item.organisation}`}
-          className="border border-[#3a3a3a] bg-[#202020] p-5"
-        >
-          <div className="flex flex-col gap-3 border-b border-[#3a3a3a] pb-4 sm:flex-row sm:items-start sm:justify-between">
+      {openWindows.experience && (
+        <Window {...getWindowProps("experience")}>
+          <div className="space-y-5">
             <div>
-              <p className="font-mono text-xs uppercase tracking-[0.16em] text-[#d97706]">
-                {item.type}
+              <p className="font-mono text-xs uppercase tracking-[0.18em] text-[#a3a3a3]">
+                background
               </p>
 
-              <h3 className="mt-2 text-lg font-medium text-[#f2f2f2]">
-                {item.role}
+              <h2 className="mt-2 text-2xl font-semibold text-[#f2f2f2]">
+                Experience
+              </h2>
+
+              <p className="mt-2 text-sm leading-6 text-[#c9c9c9]">
+                A summary of my education, work experience, and technical
+                background.
+              </p>
+            </div>
+
+            {experience.map((item) => (
+              <article
+                key={`${item.role}-${item.organisation}`}
+                className="border border-[#3a3a3a] bg-[#202020] p-5"
+              >
+                <div className="flex flex-col gap-3 border-b border-[#3a3a3a] pb-4 sm:flex-row sm:items-start sm:justify-between">
+                  <div>
+                    <p className="font-mono text-xs uppercase tracking-[0.16em] text-[#d97706]">
+                      {item.type}
+                    </p>
+
+                    <h3 className="mt-2 text-lg font-medium text-[#f2f2f2]">
+                      {item.role}
+                    </h3>
+
+                    <p className="mt-1 text-sm text-[#a3a3a3]">
+                      {item.organisation}
+                    </p>
+                  </div>
+
+                  <div className="text-left font-mono text-xs text-[#a3a3a3] sm:text-right">
+                    <p>{item.date}</p>
+                    <p>{item.location}</p>
+                  </div>
+                </div>
+
+                <p className="mt-4 text-sm leading-6 text-[#c9c9c9]">
+                  {item.description}
+                </p>
+
+                <ul className="mt-4 list-inside list-disc space-y-1 text-sm leading-6 text-[#bdbdbd]">
+                  {item.highlights.map((highlight) => (
+                    <li key={highlight}>{highlight}</li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+        </Window>
+      )}
+
+      {openWindows.contact && (
+        <Window {...getWindowProps("contact")}>
+          <div className="space-y-5">
+            <div>
+              <p className="font-mono text-xs uppercase tracking-[0.18em] text-[#a3a3a3]">
+                connect
+              </p>
+
+              <h2 className="mt-2 text-2xl font-semibold text-[#f2f2f2]">
+                Contact
+              </h2>
+
+              <p className="mt-2 text-sm leading-6 text-[#c9c9c9]">
+                {contact.availability}
+              </p>
+            </div>
+
+            <div className="space-y-3 border border-[#3a3a3a] bg-[#202020] p-4 text-sm">
+              <p>
+                <span className="text-[#a3a3a3]">Email:</span> {contact.email}
+              </p>
+
+              <p>
+                <span className="text-[#a3a3a3]">GitHub:</span>{" "}
+                <a
+                  href={contact.github}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="break-all text-[#d97706] hover:underline"
+                >
+                  {contact.github}
+                </a>
+              </p>
+
+              <p>
+                <span className="text-[#a3a3a3]">Website:</span>{" "}
+                <a
+                  href={contact.website}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="break-all text-[#d97706] hover:underline"
+                >
+                  {contact.website}
+                </a>
+              </p>
+
+              <p>
+                <span className="text-[#a3a3a3]">LinkedIn:</span>{" "}
+                {contact.linkedin}
+              </p>
+            </div>
+
+            <section>
+              <h3 className="font-mono text-xs uppercase tracking-[0.16em] text-[#a3a3a3]">
+                Areas of interest
               </h3>
 
-              <p className="mt-1 text-sm text-[#a3a3a3]">
-                {item.organisation}
-              </p>
-            </div>
-
-            <div className="text-left font-mono text-xs text-[#a3a3a3] sm:text-right">
-              <p>{item.date}</p>
-              <p>{item.location}</p>
-            </div>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {contact.interests.map((interest) => (
+                  <span
+                    key={interest}
+                    className="border border-[#3a3a3a] bg-[#202020] px-2 py-1 text-xs text-[#c9c9c9]"
+                  >
+                    {interest}
+                  </span>
+                ))}
+              </div>
+            </section>
           </div>
-
-          <p className="mt-4 text-sm leading-6 text-[#c9c9c9]">
-            {item.description}
-          </p>
-
-          <ul className="mt-4 list-inside list-disc space-y-1 text-sm leading-6 text-[#bdbdbd]">
-            {item.highlights.map((highlight) => (
-              <li key={highlight}>{highlight}</li>
-            ))}
-          </ul>
-        </article>
-      ))}
-    </div>
-  </Window>
-)}
-
-        {openWindows.contact && (
-  <Window {...getWindowProps("contact")}>
-    <div className="space-y-5">
-      <div>
-        <p className="font-mono text-xs uppercase tracking-[0.18em] text-[#a3a3a3]">
-          connect
-        </p>
-
-        <h2 className="mt-2 text-2xl font-semibold text-[#f2f2f2]">
-          Contact
-        </h2>
-
-        <p className="mt-2 text-sm leading-6 text-[#c9c9c9]">
-          {contact.availability}
-        </p>
-      </div>
-
-      <div className="space-y-3 border border-[#3a3a3a] bg-[#202020] p-4 text-sm">
-        <p>
-          <span className="text-[#a3a3a3]">Email:</span>{" "}
-          {contact.email}
-        </p>
-
-        <p>
-          <span className="text-[#a3a3a3]">GitHub:</span>{" "}
-          <a
-            href={contact.github}
-            target="_blank"
-            rel="noreferrer"
-            className="text-[#d97706] hover:underline"
-          >
-            {contact.github}
-          </a>
-        </p>
-
-        <p>
-          <span className="text-[#a3a3a3]">Website:</span>{" "}
-          <a
-            href={contact.website}
-            target="_blank"
-            rel="noreferrer"
-            className="text-[#d97706] hover:underline"
-          >
-            {contact.website}
-          </a>
-        </p>
-
-        <p>
-          <span className="text-[#a3a3a3]">LinkedIn:</span>{" "}
-          {contact.linkedin}
-        </p>
-      </div>
-
-      <section>
-        <h3 className="font-mono text-xs uppercase tracking-[0.16em] text-[#a3a3a3]">
-          Areas of interest
-        </h3>
-
-        <div className="mt-3 flex flex-wrap gap-2">
-          {contact.interests.map((interest) => (
-            <span
-              key={interest}
-              className="border border-[#3a3a3a] bg-[#202020] px-2 py-1 text-xs text-[#c9c9c9]"
-            >
-              {interest}
-            </span>
-          ))}
-        </div>
-      </section>
-    </div>
-  </Window>
-)}
+        </Window>
+      )}
 
       {openWindows.assistant && (
         <Window {...getWindowProps("assistant")}>
