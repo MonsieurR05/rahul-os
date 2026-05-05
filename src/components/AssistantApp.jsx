@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { profile, projects, skills, experience } from "@/data/portfolio";
 
 const suggestedQuestions = [
   "What are Rahul's strongest projects?",
@@ -9,32 +10,131 @@ const suggestedQuestions = [
   "Which project shows backend development?",
 ];
 
-const placeholderAnswers = {
-  "What are Rahul's strongest projects?":
-    "RahulOS, SectorFlow, and F1 Explorer are currently the strongest portfolio projects. RahulOS shows interactive frontend design, SectorFlow shows backend/API development, and F1 Explorer shows full-stack project experience.",
-
-  "Which skills does Rahul demonstrate?":
-    "This portfolio currently demonstrates JavaScript, React, Next.js, Tailwind CSS, Git, REST APIs, backend development, UI design, and creative computing.",
-
-  "Summarise Rahul for a recruiter.":
-    "Rahul is a Computer Science student and software developer with experience building full-stack web apps, backend APIs, interactive interfaces, and portfolio systems. His work shows technical implementation, clear UI thinking, and project-based learning.",
-
-  "Which project shows backend development?":
-    "SectorFlow and F1 Explorer are the clearest backend examples. SectorFlow focuses on Rust API endpoints, while F1 Explorer uses a Flask API with a SQLite database and frontend integration.",
-};
-
 export default function AssistantApp() {
   const [input, setInput] = useState("");
   const [response, setResponse] = useState(
-    "Assistant is running in local preview mode. Choose a suggested question or type one below."
+    "Assistant is running in local data mode. Choose a suggested question or type one below."
   );
+
+  function getProjectsSummary() {
+    return projects
+      .map(
+        (project) =>
+          `${project.title} is a ${project.type.toLowerCase()} with ${project.tech.join(
+            ", "
+          )}.`
+      )
+      .join(" ");
+  }
+
+  function getSkillsSummary() {
+    return skills
+      .map((group) => `${group.category}: ${group.items.join(", ")}`)
+      .join(" | ");
+  }
+
+  function getRecruiterSummary() {
+    const projectNames = projects.map((project) => project.title).join(", ");
+    const mainSkills = skills
+      .flatMap((group) => group.items)
+      .slice(0, 12)
+      .join(", ");
+
+    return `${profile.name} is a ${profile.title.toLowerCase()} based in ${
+      profile.location
+    }. ${profile.summary} Key projects include ${projectNames}. The portfolio demonstrates skills including ${mainSkills}.`;
+  }
+
+  function getBackendProjects() {
+    const backendKeywords = [
+      "Rust",
+      "Python",
+      "Flask",
+      "Node.js",
+      "REST APIs",
+      "SQLite",
+      "SQL",
+    ];
+
+    const backendProjects = projects.filter((project) =>
+      project.tech.some((tech) => backendKeywords.includes(tech))
+    );
+
+    return backendProjects
+      .map(
+        (project) =>
+          `${project.title}: ${project.description} Tech used: ${project.tech.join(
+            ", "
+          )}.`
+      )
+      .join(" ");
+  }
+
+  function getExperienceSummary() {
+    return experience
+      .map(
+        (item) =>
+          `${item.role} at ${item.organisation} (${item.date}): ${item.description}`
+      )
+      .join(" ");
+  }
+
+  function generateLocalResponse(question) {
+    const lowerQuestion = question.toLowerCase();
+
+    if (
+      lowerQuestion.includes("strongest") ||
+      lowerQuestion.includes("projects")
+    ) {
+      return getProjectsSummary();
+    }
+
+    if (
+      lowerQuestion.includes("skill") ||
+      lowerQuestion.includes("tech") ||
+      lowerQuestion.includes("stack")
+    ) {
+      return getSkillsSummary();
+    }
+
+    if (
+      lowerQuestion.includes("recruiter") ||
+      lowerQuestion.includes("summarise") ||
+      lowerQuestion.includes("summary")
+    ) {
+      return getRecruiterSummary();
+    }
+
+    if (
+      lowerQuestion.includes("backend") ||
+      lowerQuestion.includes("api") ||
+      lowerQuestion.includes("database")
+    ) {
+      return getBackendProjects();
+    }
+
+    if (
+      lowerQuestion.includes("experience") ||
+      lowerQuestion.includes("work") ||
+      lowerQuestion.includes("education")
+    ) {
+      return getExperienceSummary();
+    }
+
+    if (
+      lowerQuestion.includes("rahul") ||
+      lowerQuestion.includes("who") ||
+      lowerQuestion.includes("about")
+    ) {
+      return `${profile.name} is a ${profile.title.toLowerCase()} based in ${profile.location}. ${profile.summary}`;
+    }
+
+    return "I could not match that question to a local portfolio section yet. Try asking about projects, skills, backend work, experience, or a recruiter summary.";
+  }
 
   function handleQuestion(question) {
     setInput(question);
-    setResponse(
-      placeholderAnswers[question] ||
-        "This is a placeholder response. In the next version, this question will be answered using real portfolio data and an AI API."
-    );
+    setResponse(generateLocalResponse(question));
   }
 
   function handleSubmit(event) {
@@ -51,9 +151,9 @@ export default function AssistantApp() {
   return (
     <div className="space-y-5">
       <div className="border border-[#3a3a3a] bg-[#111111] p-4 font-mono text-sm">
-        <p className="text-[#d97706]">$ assistant --mode local</p>
+        <p className="text-[#d97706]">$ assistant --mode local-data</p>
         <p className="mt-2 text-[#bdbdbd]">
-          Portfolio assistant interface loaded. AI connection pending.
+          Portfolio assistant is answering from local portfolio data.
         </p>
       </div>
 
@@ -106,7 +206,9 @@ export default function AssistantApp() {
           Response
         </h3>
 
-        <p className="mt-3 text-sm leading-6 text-[#d0d0d0]">{response}</p>
+        <p className="mt-3 whitespace-pre-line text-sm leading-6 text-[#d0d0d0]">
+          {response}
+        </p>
       </section>
     </div>
   );
