@@ -4,6 +4,7 @@ import { useState } from "react";
 import AppIcon from "./AppIcon";
 import Window from "./Window";
 import Taskbar from "./Taskbar";
+import AssistantApp from "./AssistantApp";
 import {
   profile,
   projects,
@@ -394,22 +395,7 @@ export default function Desktop() {
 
       {openWindows.assistant && (
         <Window {...getWindowProps("assistant")}>
-          <div className="space-y-4">
-            <div className="border border-[#3a3a3a] bg-[#111111] p-4 font-mono text-sm">
-              <p className="text-[#d97706]">$ assistant --status</p>
-
-              <p className="mt-2 text-[#bdbdbd]">
-                Offline. Portfolio Q&amp;A will be added in a later feature
-                branch.
-              </p>
-            </div>
-
-            <p className="text-sm leading-6 text-[#c9c9c9]">
-              The assistant will eventually answer questions using this
-              portfolio data, such as which projects demonstrate specific skills
-              or which work is most relevant to a role.
-            </p>
-          </div>
+          <AssistantApp />
         </Window>
       )}
     </section>
