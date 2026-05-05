@@ -86,12 +86,12 @@ Type 'help' to view available commands.`;
   }
 
   return (
-    <div className="border border-[#3a3a3a] bg-[#111111] p-4 font-mono text-sm">
+    <div className="border border-[#2a303a] bg-[#111111] p-4 font-mono text-sm">
       <div className="mb-4 space-y-4">
         {history.map((entry, index) => (
           <div key={`${entry.command}-${index}`}>
-            <p className="text-[#d97706]">$ {entry.command}</p>
-            <pre className="mt-2 whitespace-pre-wrap text-[#c9c9c9]">
+            <p className="text-[#67e8f9]">$ {entry.command}</p>
+            <pre className="mt-2 whitespace-pre-wrap text-[#d4d4d8]">
               {entry.output}
             </pre>
           </div>
@@ -99,12 +99,12 @@ Type 'help' to view available commands.`;
       </div>
 
       <form onSubmit={handleSubmit} className="flex items-center gap-2">
-        <span className="text-[#d97706]">$</span>
+        <span className="text-[#67e8f9]">$</span>
         <input
           value={input}
           onChange={(event) => setInput(event.target.value)}
           autoFocus
-          className="min-w-0 flex-1 bg-transparent text-[#f2f2f2] outline-none placeholder:text-[#6f6f6f]"
+          className="min-w-0 flex-1 bg-transparent text-[#f4f4f5] outline-none placeholder:text-[#6f6f6f]"
           placeholder="type a command..."
         />
       </form>

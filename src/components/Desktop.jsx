@@ -70,12 +70,12 @@ export default function Desktop() {
   }
 
   return (
-    <section className="relative min-h-screen overflow-hidden bg-[#1b1b1b] text-[#f2f2f2]">
+    <section className="relative min-h-screen overflow-hidden bg-[#08090b] text-[#f4f4f5]">
       <Taskbar />
 
       <main className="flex min-h-screen items-center justify-center px-4 pb-10 pt-16 sm:px-6 md:pt-10">
         <section className="w-full max-w-4xl text-center">
-          <p className="font-mono text-xs uppercase tracking-[0.22em] text-[#a3a3a3]">
+          <p className="font-mono text-xs uppercase tracking-[0.22em] text-[#9ca3af]">
             local portfolio environment
           </p>
 
@@ -83,7 +83,7 @@ export default function Desktop() {
             RahulOS
           </h1>
 
-          <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-[#bdbdbd]">
+          <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-[#9ca3af]">
             An operating-system inspired portfolio for exploring my work,
             skills, experience, and background.
           </p>
@@ -98,13 +98,13 @@ export default function Desktop() {
             ))}
           </div>
 
-          <div className="mx-auto mt-8 max-w-2xl border border-[#3a3a3a] bg-[#222222] p-4 text-left sm:mt-10">
-            <p className="font-mono text-sm text-[#d97706]">$ status</p>
+          <div className="mx-auto mt-8 max-w-2xl border border-[#2a303a] bg-[#101216] p-4 text-left sm:mt-10">
+            <p className="font-mono text-sm text-[#67e8f9]">$ status</p>
 
-            <div className="mt-3 grid gap-2 font-mono text-xs text-[#a3a3a3] sm:grid-cols-3">
+            <div className="mt-3 grid gap-2 font-mono text-xs text-[#9ca3af] sm:grid-cols-3">
               <p>profile: loaded</p>
               <p>projects: {projects.length}</p>
-              <p>assistant: local-data</p>
+              <p>assistant: gemini/local</p>
             </div>
           </div>
         </section>
@@ -114,16 +114,16 @@ export default function Desktop() {
         <Window {...getWindowProps("home")}>
           <div className="space-y-4">
             <div>
-              <p className="font-mono text-xs uppercase tracking-[0.18em] text-[#a3a3a3]">
+              <p className="font-mono text-xs uppercase tracking-[0.18em] text-[#9ca3af]">
                 welcome
               </p>
 
               <h2 className="mt-2 text-2xl font-semibold">{profile.name}</h2>
 
-              <p className="mt-1 text-sm text-[#d0d0d0]">{profile.title}</p>
+              <p className="mt-1 text-sm text-[#d4d4d8]">{profile.title}</p>
             </div>
 
-            <p className="text-sm leading-6 text-[#c9c9c9]">
+            <p className="text-sm leading-6 text-[#d4d4d8]">
               {profile.summary}
             </p>
 
@@ -131,7 +131,7 @@ export default function Desktop() {
               {profile.focusAreas.map((area) => (
                 <div
                   key={area}
-                  className="border border-[#3a3a3a] bg-[#202020] p-3 text-sm text-[#d0d0d0]"
+                  className="border border-[#2a303a] bg-[#101216] p-3 text-sm text-[#d4d4d8]"
                 >
                   {area}
                 </div>
@@ -143,7 +143,7 @@ export default function Desktop() {
 
       {openWindows.about && (
         <Window {...getWindowProps("about")}>
-          <div className="space-y-4 text-sm leading-6 text-[#d0d0d0]">
+          <div className="space-y-4 text-sm leading-6 text-[#d4d4d8]">
             <p>
               I’m a UK-based Computer Science student interested in building
               software systems that are functional, clear, and engaging to use.
@@ -156,7 +156,7 @@ export default function Desktop() {
               operating-system inspired interface.
             </p>
 
-            <p className="text-[#a3a3a3]">Location: {profile.location}</p>
+            <p className="text-[#9ca3af]">Location: {profile.location}</p>
           </div>
         </Window>
       )}
@@ -165,15 +165,15 @@ export default function Desktop() {
         <Window {...getWindowProps("projects")}>
           <div className="space-y-5">
             <div>
-              <p className="font-mono text-xs uppercase tracking-[0.18em] text-[#a3a3a3]">
+              <p className="font-mono text-xs uppercase tracking-[0.18em] text-[#9ca3af]">
                 case studies
               </p>
 
-              <h2 className="mt-2 text-2xl font-semibold text-[#f2f2f2]">
+              <h2 className="mt-2 text-2xl font-semibold text-[#f4f4f5]">
                 Projects
               </h2>
 
-              <p className="mt-2 text-sm leading-6 text-[#c9c9c9]">
+              <p className="mt-2 text-sm leading-6 text-[#d4d4d8]">
                 A selection of software and interactive systems, presented as
                 structured portfolio case studies.
               </p>
@@ -182,20 +182,20 @@ export default function Desktop() {
             {projects.map((project) => (
               <article
                 key={project.title}
-                className="border border-[#3a3a3a] bg-[#202020] p-5"
+                className="border border-[#2a303a] bg-[#101216] p-5"
               >
-                <div className="flex flex-col gap-3 border-b border-[#3a3a3a] pb-4 sm:flex-row sm:items-start sm:justify-between">
+                <div className="flex flex-col gap-3 border-b border-[#2a303a] pb-4 sm:flex-row sm:items-start sm:justify-between">
                   <div>
-                    <h3 className="text-xl font-medium text-[#f2f2f2]">
+                    <h3 className="text-xl font-medium text-[#f4f4f5]">
                       {project.title}
                     </h3>
 
-                    <p className="mt-1 text-sm text-[#a3a3a3]">
+                    <p className="mt-1 text-sm text-[#9ca3af]">
                       {project.type}
                     </p>
                   </div>
 
-                  <div className="text-left font-mono text-xs text-[#a3a3a3] sm:text-right">
+                  <div className="text-left font-mono text-xs text-[#9ca3af] sm:text-right">
                     <p>{project.status}</p>
                     <p>{project.timeline}</p>
                   </div>
@@ -203,33 +203,33 @@ export default function Desktop() {
 
                 <div className="mt-4 grid gap-4 md:grid-cols-[1fr_220px]">
                   <div className="space-y-4">
-                    <p className="text-sm leading-6 text-[#c9c9c9]">
+                    <p className="text-sm leading-6 text-[#d4d4d8]">
                       {project.description}
                     </p>
 
                     <section>
-                      <h4 className="font-mono text-xs uppercase tracking-[0.16em] text-[#d97706]">
+                      <h4 className="font-mono text-xs uppercase tracking-[0.16em] text-[#67e8f9]">
                         Problem
                       </h4>
-                      <p className="mt-2 text-sm leading-6 text-[#bdbdbd]">
+                      <p className="mt-2 text-sm leading-6 text-[#9ca3af]">
                         {project.problem}
                       </p>
                     </section>
 
                     <section>
-                      <h4 className="font-mono text-xs uppercase tracking-[0.16em] text-[#d97706]">
+                      <h4 className="font-mono text-xs uppercase tracking-[0.16em] text-[#67e8f9]">
                         Solution
                       </h4>
-                      <p className="mt-2 text-sm leading-6 text-[#bdbdbd]">
+                      <p className="mt-2 text-sm leading-6 text-[#9ca3af]">
                         {project.solution}
                       </p>
                     </section>
 
                     <section>
-                      <h4 className="font-mono text-xs uppercase tracking-[0.16em] text-[#d97706]">
+                      <h4 className="font-mono text-xs uppercase tracking-[0.16em] text-[#67e8f9]">
                         Outcome
                       </h4>
-                      <p className="mt-2 text-sm leading-6 text-[#bdbdbd]">
+                      <p className="mt-2 text-sm leading-6 text-[#9ca3af]">
                         {project.outcome}
                       </p>
                     </section>
@@ -237,23 +237,23 @@ export default function Desktop() {
 
                   <aside className="space-y-4">
                     <div>
-                      <h4 className="font-mono text-xs uppercase tracking-[0.16em] text-[#a3a3a3]">
+                      <h4 className="font-mono text-xs uppercase tracking-[0.16em] text-[#9ca3af]">
                         Role
                       </h4>
-                      <p className="mt-2 text-sm text-[#f2f2f2]">
+                      <p className="mt-2 text-sm text-[#f4f4f5]">
                         {project.role}
                       </p>
                     </div>
 
                     <div>
-                      <h4 className="font-mono text-xs uppercase tracking-[0.16em] text-[#a3a3a3]">
+                      <h4 className="font-mono text-xs uppercase tracking-[0.16em] text-[#9ca3af]">
                         Tech
                       </h4>
                       <div className="mt-2 flex flex-wrap gap-2">
                         {project.tech.map((item) => (
                           <span
                             key={item}
-                            className="border border-[#3a3a3a] bg-[#262626] px-2 py-1 text-xs text-[#c9c9c9]"
+                            className="border border-[#2a303a] bg-[#151922] px-2 py-1 text-xs text-[#d4d4d8]"
                           >
                             {item}
                           </span>
@@ -262,10 +262,10 @@ export default function Desktop() {
                     </div>
 
                     <div>
-                      <h4 className="font-mono text-xs uppercase tracking-[0.16em] text-[#a3a3a3]">
+                      <h4 className="font-mono text-xs uppercase tracking-[0.16em] text-[#9ca3af]">
                         Features
                       </h4>
-                      <ul className="mt-2 list-inside list-disc space-y-1 text-xs leading-5 text-[#bdbdbd]">
+                      <ul className="mt-2 list-inside list-disc space-y-1 text-xs leading-5 text-[#9ca3af]">
                         {project.features.map((feature) => (
                           <li key={feature}>{feature}</li>
                         ))}
@@ -273,10 +273,10 @@ export default function Desktop() {
                     </div>
 
                     <div>
-                      <h4 className="font-mono text-xs uppercase tracking-[0.16em] text-[#a3a3a3]">
+                      <h4 className="font-mono text-xs uppercase tracking-[0.16em] text-[#9ca3af]">
                         Links
                       </h4>
-                      <div className="mt-2 space-y-1 text-xs text-[#bdbdbd]">
+                      <div className="mt-2 space-y-1 text-xs text-[#9ca3af]">
                         <p>GitHub: {project.links.github}</p>
                         <p>Live: {project.links.live}</p>
                       </div>
@@ -299,15 +299,15 @@ export default function Desktop() {
         <Window {...getWindowProps("experience")}>
           <div className="space-y-5">
             <div>
-              <p className="font-mono text-xs uppercase tracking-[0.18em] text-[#a3a3a3]">
+              <p className="font-mono text-xs uppercase tracking-[0.18em] text-[#9ca3af]">
                 background
               </p>
 
-              <h2 className="mt-2 text-2xl font-semibold text-[#f2f2f2]">
+              <h2 className="mt-2 text-2xl font-semibold text-[#f4f4f5]">
                 Experience
               </h2>
 
-              <p className="mt-2 text-sm leading-6 text-[#c9c9c9]">
+              <p className="mt-2 text-sm leading-6 text-[#d4d4d8]">
                 A summary of my education, work experience, and technical
                 background.
               </p>
@@ -316,34 +316,34 @@ export default function Desktop() {
             {experience.map((item) => (
               <article
                 key={`${item.role}-${item.organisation}`}
-                className="border border-[#3a3a3a] bg-[#202020] p-5"
+                className="border border-[#2a303a] bg-[#101216] p-5"
               >
-                <div className="flex flex-col gap-3 border-b border-[#3a3a3a] pb-4 sm:flex-row sm:items-start sm:justify-between">
+                <div className="flex flex-col gap-3 border-b border-[#2a303a] pb-4 sm:flex-row sm:items-start sm:justify-between">
                   <div>
-                    <p className="font-mono text-xs uppercase tracking-[0.16em] text-[#d97706]">
+                    <p className="font-mono text-xs uppercase tracking-[0.16em] text-[#67e8f9]">
                       {item.type}
                     </p>
 
-                    <h3 className="mt-2 text-lg font-medium text-[#f2f2f2]">
+                    <h3 className="mt-2 text-lg font-medium text-[#f4f4f5]">
                       {item.role}
                     </h3>
 
-                    <p className="mt-1 text-sm text-[#a3a3a3]">
+                    <p className="mt-1 text-sm text-[#9ca3af]">
                       {item.organisation}
                     </p>
                   </div>
 
-                  <div className="text-left font-mono text-xs text-[#a3a3a3] sm:text-right">
+                  <div className="text-left font-mono text-xs text-[#9ca3af] sm:text-right">
                     <p>{item.date}</p>
                     <p>{item.location}</p>
                   </div>
                 </div>
 
-                <p className="mt-4 text-sm leading-6 text-[#c9c9c9]">
+                <p className="mt-4 text-sm leading-6 text-[#d4d4d8]">
                   {item.description}
                 </p>
 
-                <ul className="mt-4 list-inside list-disc space-y-1 text-sm leading-6 text-[#bdbdbd]">
+                <ul className="mt-4 list-inside list-disc space-y-1 text-sm leading-6 text-[#9ca3af]">
                   {item.highlights.map((highlight) => (
                     <li key={highlight}>{highlight}</li>
                   ))}
@@ -358,56 +358,56 @@ export default function Desktop() {
         <Window {...getWindowProps("contact")}>
           <div className="space-y-5">
             <div>
-              <p className="font-mono text-xs uppercase tracking-[0.18em] text-[#a3a3a3]">
+              <p className="font-mono text-xs uppercase tracking-[0.18em] text-[#9ca3af]">
                 connect
               </p>
 
-              <h2 className="mt-2 text-2xl font-semibold text-[#f2f2f2]">
+              <h2 className="mt-2 text-2xl font-semibold text-[#f4f4f5]">
                 Contact
               </h2>
 
-              <p className="mt-2 text-sm leading-6 text-[#c9c9c9]">
+              <p className="mt-2 text-sm leading-6 text-[#d4d4d8]">
                 {contact.availability}
               </p>
             </div>
 
-            <div className="space-y-3 border border-[#3a3a3a] bg-[#202020] p-4 text-sm">
+            <div className="space-y-3 border border-[#2a303a] bg-[#101216] p-4 text-sm">
               <p>
-                <span className="text-[#a3a3a3]">Email:</span> {contact.email}
+                <span className="text-[#9ca3af]">Email:</span> {contact.email}
               </p>
 
               <p>
-                <span className="text-[#a3a3a3]">GitHub:</span>{" "}
+                <span className="text-[#9ca3af]">GitHub:</span>{" "}
                 <a
                   href={contact.github}
                   target="_blank"
                   rel="noreferrer"
-                  className="break-all text-[#d97706] hover:underline"
+                  className="break-all text-[#67e8f9] hover:underline"
                 >
                   {contact.github}
                 </a>
               </p>
 
               <p>
-                <span className="text-[#a3a3a3]">Website:</span>{" "}
+                <span className="text-[#9ca3af]">Website:</span>{" "}
                 <a
                   href={contact.website}
                   target="_blank"
                   rel="noreferrer"
-                  className="break-all text-[#d97706] hover:underline"
+                  className="break-all text-[#67e8f9] hover:underline"
                 >
                   {contact.website}
                 </a>
               </p>
 
               <p>
-                <span className="text-[#a3a3a3]">LinkedIn:</span>{" "}
+                <span className="text-[#9ca3af]">LinkedIn:</span>{" "}
                 {contact.linkedin}
               </p>
             </div>
 
             <section>
-              <h3 className="font-mono text-xs uppercase tracking-[0.16em] text-[#a3a3a3]">
+              <h3 className="font-mono text-xs uppercase tracking-[0.16em] text-[#9ca3af]">
                 Areas of interest
               </h3>
 
@@ -415,7 +415,7 @@ export default function Desktop() {
                 {contact.interests.map((interest) => (
                   <span
                     key={interest}
-                    className="border border-[#3a3a3a] bg-[#202020] px-2 py-1 text-xs text-[#c9c9c9]"
+                    className="border border-[#2a303a] bg-[#101216] px-2 py-1 text-xs text-[#d4d4d8]"
                   >
                     {interest}
                   </span>

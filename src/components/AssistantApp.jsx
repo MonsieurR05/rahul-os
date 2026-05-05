@@ -187,16 +187,16 @@ export default function AssistantApp() {
 
   return (
     <div className="space-y-5">
-      <div className="border border-[#3a3a3a] bg-[#111111] p-4 font-mono text-sm">
-        <p className="text-[#d97706]">$ assistant --mode {mode}</p>
-        <p className="mt-2 text-[#bdbdbd]">
+      <div className="border border-[#2a303a] bg-[#111111] p-4 font-mono text-sm">
+        <p className="text-[#67e8f9]">$ assistant --mode {mode}</p>
+        <p className="mt-2 text-[#9ca3af]">
           Portfolio assistant can answer using the server AI route, with local
           fallback if the request fails.
         </p>
       </div>
 
       <section>
-        <h3 className="font-mono text-xs uppercase tracking-[0.16em] text-[#a3a3a3]">
+        <h3 className="font-mono text-xs uppercase tracking-[0.16em] text-[#9ca3af]">
           Suggested questions
         </h3>
 
@@ -206,7 +206,7 @@ export default function AssistantApp() {
               key={question}
               onClick={() => handleQuestion(question)}
               disabled={isLoading}
-              className="border border-[#3a3a3a] bg-[#202020] px-3 py-2 text-left text-sm text-[#d0d0d0] transition hover:border-[#d97706] hover:bg-[#262626] disabled:cursor-not-allowed disabled:opacity-60"
+              className="border border-[#2a303a] bg-[#101216] px-3 py-2 text-left text-sm text-[#d4d4d8] transition hover:border-[#67e8f9] hover:bg-[#151922] disabled:cursor-not-allowed disabled:opacity-60"
             >
               {question}
             </button>
@@ -217,7 +217,7 @@ export default function AssistantApp() {
       <form onSubmit={handleSubmit} className="space-y-3">
         <label
           htmlFor="assistant-question"
-          className="block font-mono text-xs uppercase tracking-[0.16em] text-[#a3a3a3]"
+          className="block font-mono text-xs uppercase tracking-[0.16em] text-[#9ca3af]"
         >
           Ask about the portfolio
         </label>
@@ -229,25 +229,25 @@ export default function AssistantApp() {
             onChange={(event) => setInput(event.target.value)}
             placeholder="e.g. What project best shows React?"
             disabled={isLoading}
-            className="min-w-0 flex-1 border border-[#3a3a3a] bg-[#111111] px-3 py-2 text-sm text-[#f2f2f2] outline-none placeholder:text-[#6f6f6f] focus:border-[#d97706] disabled:opacity-60"
+            className="min-w-0 flex-1 border border-[#2a303a] bg-[#111111] px-3 py-2 text-sm text-[#f4f4f5] outline-none placeholder:text-[#6f6f6f] focus:border-[#67e8f9] disabled:opacity-60"
           />
 
           <button
             type="submit"
             disabled={isLoading}
-            className="border border-[#d97706] bg-[#2a2118] px-4 py-2 text-sm text-[#f2f2f2] transition hover:bg-[#332719] disabled:cursor-not-allowed disabled:opacity-60"
+            className="border border-[#67e8f9] bg-[#0e3440] px-4 py-2 text-sm text-[#f4f4f5] transition hover:bg-[#164e63] disabled:cursor-not-allowed disabled:opacity-60"
           >
             {isLoading ? "Run..." : "Run"}
           </button>
         </div>
       </form>
 
-      <section className="border border-[#3a3a3a] bg-[#202020] p-4">
-        <h3 className="font-mono text-xs uppercase tracking-[0.16em] text-[#a3a3a3]">
+      <section className="border border-[#2a303a] bg-[#101216] p-4">
+        <h3 className="font-mono text-xs uppercase tracking-[0.16em] text-[#9ca3af]">
           Response
         </h3>
 
-        <p className="mt-3 whitespace-pre-line text-sm leading-6 text-[#d0d0d0]">
+        <p className="mt-3 whitespace-pre-line text-sm leading-6 text-[#d4d4d8]">
           {response}
         </p>
       </section>
