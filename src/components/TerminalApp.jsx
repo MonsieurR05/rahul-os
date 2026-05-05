@@ -114,7 +114,7 @@ Type 'help' to view available commands.`;
 
       <form
         onSubmit={handleSubmit}
-        className="flex items-center gap-2 border-t border-[#1f1f1f] pt-3"
+        className="flex items-center gap-2 border-t border-[#2a2a2a] pt-3"
       >
         <span className="text-[#f5f5f5]">$</span>
 

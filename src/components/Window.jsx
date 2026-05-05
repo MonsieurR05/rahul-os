@@ -37,10 +37,10 @@ export default function Window({
   return (
     <div
       onMouseDown={onFocus}
-      className={`fixed ${positions[position]} ${sizes[size]} overflow-hidden rounded-3xl border border-[#1f1f1f] bg-[#0d0d0d] shadow-[0_24px_80px_rgba(0,0,0,0.55)]`}
+      className={`fixed ${positions[position]} ${sizes[size]} overflow-hidden rounded-3xl border border-[#2a2a2a] bg-[#0d0d0d] shadow-[0_24px_80px_rgba(0,0,0,0.55)]`}
       style={{ zIndex }}
     >
-      <div className="flex items-center justify-between border-b border-[#1f1f1f] bg-[#080808] px-3 py-2 md:px-4">
+      <div className="flex items-center justify-between border-b border-[#2a2a2a] bg-[#080808] px-3 py-2 md:px-4">
         <div className="flex min-w-0 items-center gap-3">
           <div className="h-3 w-3 shrink-0 rounded-full border border-[#3a3a3a] bg-[#050505]" />
           <p className="truncate text-sm font-medium text-[#f5f5f5]">
@@ -50,7 +50,7 @@ export default function Window({
 
         <button
           onClick={onClose}
-          className="rounded-full border border-[#1f1f1f] bg-[#050505] px-3 py-1 text-xs text-[#a3a3a3] transition hover:border-[#3a3a3a] hover:text-[#f5f5f5]"
+          className="rounded-full border border-[#2a2a2a] bg-[#050505] px-3 py-1 text-xs text-[#a3a3a3] transition hover:border-[#3a3a3a] hover:text-[#f5f5f5]"
         >
           close
         </button>
