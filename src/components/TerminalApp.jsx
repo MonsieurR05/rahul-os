@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { profile, projects, skills, experience, contact } from "@/data/portfolio";
 
 const helpText = `Available commands:
@@ -14,13 +14,17 @@ help`;
 
 export default function TerminalApp() {
   const [input, setInput] = useState("");
-  const [history, setHistory] = useState([
-    {
-      command: "boot",
-      output:
-        "RahulOS terminal ready. Type 'help' to view available commands.",
-    },
-  ]);
+  const [history, setHistory] = useState([]);
+  const latestEntryRef = useRef(null);
+
+  useEffect(() => {
+    if (latestEntryRef.current) {
+      latestEntryRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }, [history]);
 
   function runCommand(rawCommand) {
     const command = rawCommand.trim().toLowerCase();
@@ -86,25 +90,38 @@ Type 'help' to view available commands.`;
   }
 
   return (
-    <div className="border border-[#2a303a] bg-[#111111] p-4 font-mono text-sm">
-      <div className="mb-4 space-y-4">
+    <div className="h-full rounded-2xl bg-[#050505] p-4 font-mono text-sm">
+      <div className="mb-4 max-h-[46vh] space-y-4 overflow-y-auto pr-2">
+        <div>
+          <p className="text-[#f5f5f5]">$ boot</p>
+          <pre className="mt-2 whitespace-pre-wrap text-[#a3a3a3]">
+            RahulOS terminal ready. Type 'help' to view commands.
+          </pre>
+        </div>
+
         {history.map((entry, index) => (
-          <div key={`${entry.command}-${index}`}>
-            <p className="text-[#67e8f9]">$ {entry.command}</p>
-            <pre className="mt-2 whitespace-pre-wrap text-[#d4d4d8]">
+          <div
+            key={`${entry.command}-${index}`}
+            ref={index === history.length - 1 ? latestEntryRef : null}
+          >
+            <p className="text-[#f5f5f5]">$ {entry.command}</p>
+            <pre className="mt-2 whitespace-pre-wrap text-[#a3a3a3]">
               {entry.output}
             </pre>
           </div>
         ))}
       </div>
 
-      <form onSubmit={handleSubmit} className="flex items-center gap-2">
-        <span className="text-[#67e8f9]">$</span>
+      <form
+        onSubmit={handleSubmit}
+        className="flex items-center gap-2 border-t border-[#1f1f1f] pt-3"
+      >
+        <span className="text-[#f5f5f5]">$</span>
+
         <input
           value={input}
           onChange={(event) => setInput(event.target.value)}
-          autoFocus
-          className="min-w-0 flex-1 bg-transparent text-[#f4f4f5] outline-none placeholder:text-[#6f6f6f]"
+          className="min-w-0 flex-1 bg-transparent text-[#f5f5f5] outline-none placeholder:text-[#666666]"
           placeholder="type a command..."
         />
       </form>

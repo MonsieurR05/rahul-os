@@ -37,34 +37,34 @@ export default function BootScreen({ onComplete }) {
   );
 
   return (
-    <section className="flex min-h-screen items-center justify-center bg-[#08090b] px-4 text-[#f4f4f5]">
-      <div className="w-full max-w-2xl border border-[#2a303a] bg-[#101216] shadow-[0_24px_80px_rgba(0,0,0,0.55)]">
-        <div className="flex items-center justify-between border-b border-[#2a303a] bg-[#0c0e12] px-4 py-3">
+    <section className="flex min-h-screen items-center justify-center bg-[#030303] px-4 text-[#f5f5f5]">
+      <div className="w-full max-w-2xl border border-[#1f1f1f] bg-[#080808] shadow-[0_24px_80px_rgba(0,0,0,0.55)]">
+        <div className="flex items-center justify-between border-b border-[#1f1f1f] bg-[#080808] px-4 py-3">
           <div>
-            <p className="font-mono text-xs uppercase tracking-[0.22em] text-[#9ca3af]">
+            <p className="font-mono text-xs uppercase tracking-[0.22em] text-[#666666]">
               RahulOS
             </p>
-            <h1 className="mt-1 font-mono text-lg font-semibold text-[#f4f4f5]">
+            <h1 className="mt-1 font-mono text-lg font-semibold text-[#f5f5f5]">
               boot sequence
             </h1>
           </div>
 
-          <p className="font-mono text-xs text-[#67e8f9]">{progress}%</p>
+          <p className="font-mono text-xs text-[#f5f5f5]">{progress}%</p>
         </div>
 
         <div className="p-5">
-          <div className="mb-5 h-2 border border-[#2a303a] bg-[#08090b]">
+          <div className="mb-5 h-2 border border-[#1f1f1f] bg-[#030303]">
             <div
-              className="h-full bg-[#67e8f9] transition-all duration-300"
+              className="h-full bg-[#f5f5f5] transition-all duration-300"
               style={{ width: `${progress}%` }}
             />
           </div>
 
           <div className="min-h-56 space-y-3 font-mono text-sm">
             {bootLines.slice(0, lineIndex).map((line, index) => (
-              <p key={line} className="text-[#d4d4d8]">
-                <span className="text-[#67e8f9]">$</span>{" "}
-                <span className="text-[#9ca3af]">
+              <p key={line} className="text-[#a3a3a3]">
+                <span className="text-[#f5f5f5]">$</span>{" "}
+                <span className="text-[#666666]">
                   [{String(index + 1).padStart(2, "0")}]
                 </span>{" "}
                 {line}
@@ -72,12 +72,12 @@ export default function BootScreen({ onComplete }) {
             ))}
 
             {lineIndex < bootLines.length ? (
-              <p className="text-[#9ca3af]">
-                <span className="text-[#67e8f9]">$</span> running
-                <span className="ml-1 inline-block h-4 w-2 animate-pulse bg-[#67e8f9] align-middle" />
+              <p className="text-[#666666]">
+                <span className="text-[#f5f5f5]">$</span> running
+                <span className="ml-1 inline-block h-4 w-2 animate-pulse bg-[#f5f5f5] align-middle" />
               </p>
             ) : (
-              <p className="text-[#67e8f9]">
+              <p className="text-[#f5f5f5]">
                 <span>$</span> launch desktop
               </p>
             )}
