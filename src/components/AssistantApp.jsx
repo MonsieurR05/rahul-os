@@ -13,8 +13,10 @@ const suggestedQuestions = [
 export default function AssistantApp() {
   const [input, setInput] = useState("");
   const [response, setResponse] = useState(
-    "Assistant is running in local data mode. Choose a suggested question or type one below."
+    "Assistant is connected to local portfolio data. Ask a question or choose a suggested prompt."
   );
+  const [isLoading, setIsLoading] = useState(false);
+  const [mode, setMode] = useState("local");
 
   function getProjectsSummary() {
     return projects
@@ -132,9 +134,44 @@ export default function AssistantApp() {
     return "I could not match that question to a local portfolio section yet. Try asking about projects, skills, backend work, experience, or a recruiter summary.";
   }
 
+  async function askAssistant(question) {
+    setIsLoading(true);
+    setResponse("Thinking...");
+
+    try {
+      const res = await fetch("/api/assistant", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ question }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || "Assistant request failed.");
+      }
+
+      setMode("ai");
+      setResponse(data.answer);
+    } catch (error) {
+      console.error(error);
+
+      setMode("local fallback");
+      setResponse(
+        `${generateLocalResponse(
+          question
+        )}\n\n[Local fallback used because the AI request failed.]`
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   function handleQuestion(question) {
     setInput(question);
-    setResponse(generateLocalResponse(question));
+    askAssistant(question);
   }
 
   function handleSubmit(event) {
@@ -145,15 +182,16 @@ export default function AssistantApp() {
       return;
     }
 
-    handleQuestion(input.trim());
+    askAssistant(input.trim());
   }
 
   return (
     <div className="space-y-5">
       <div className="border border-[#3a3a3a] bg-[#111111] p-4 font-mono text-sm">
-        <p className="text-[#d97706]">$ assistant --mode local-data</p>
+        <p className="text-[#d97706]">$ assistant --mode {mode}</p>
         <p className="mt-2 text-[#bdbdbd]">
-          Portfolio assistant is answering from local portfolio data.
+          Portfolio assistant can answer using the server AI route, with local
+          fallback if the request fails.
         </p>
       </div>
 
@@ -167,7 +205,8 @@ export default function AssistantApp() {
             <button
               key={question}
               onClick={() => handleQuestion(question)}
-              className="border border-[#3a3a3a] bg-[#202020] px-3 py-2 text-left text-sm text-[#d0d0d0] transition hover:border-[#d97706] hover:bg-[#262626]"
+              disabled={isLoading}
+              className="border border-[#3a3a3a] bg-[#202020] px-3 py-2 text-left text-sm text-[#d0d0d0] transition hover:border-[#d97706] hover:bg-[#262626] disabled:cursor-not-allowed disabled:opacity-60"
             >
               {question}
             </button>
@@ -189,14 +228,16 @@ export default function AssistantApp() {
             value={input}
             onChange={(event) => setInput(event.target.value)}
             placeholder="e.g. What project best shows React?"
-            className="min-w-0 flex-1 border border-[#3a3a3a] bg-[#111111] px-3 py-2 text-sm text-[#f2f2f2] outline-none placeholder:text-[#6f6f6f] focus:border-[#d97706]"
+            disabled={isLoading}
+            className="min-w-0 flex-1 border border-[#3a3a3a] bg-[#111111] px-3 py-2 text-sm text-[#f2f2f2] outline-none placeholder:text-[#6f6f6f] focus:border-[#d97706] disabled:opacity-60"
           />
 
           <button
             type="submit"
-            className="border border-[#d97706] bg-[#2a2118] px-4 py-2 text-sm text-[#f2f2f2] transition hover:bg-[#332719]"
+            disabled={isLoading}
+            className="border border-[#d97706] bg-[#2a2118] px-4 py-2 text-sm text-[#f2f2f2] transition hover:bg-[#332719] disabled:cursor-not-allowed disabled:opacity-60"
           >
-            Run
+            {isLoading ? "Run..." : "Run"}
           </button>
         </div>
       </form>
