@@ -325,73 +325,136 @@ export default function Desktop() {
         </Window>
       )}
 
-      {openWindows.experience && (
-        <Window {...getWindowProps("experience")}>
-          <div className="space-y-4">
-            {experience.map((item) => (
-              <article
-                key={`${item.role}-${item.organisation}`}
-                className="border border-[#3a3a3a] bg-[#202020] p-4"
-              >
-                <p className="font-mono text-xs text-[#d97706]">{item.date}</p>
+        {openWindows.experience && (
+  <Window {...getWindowProps("experience")}>
+    <div className="space-y-5">
+      <div>
+        <p className="font-mono text-xs uppercase tracking-[0.18em] text-[#a3a3a3]">
+          background
+        </p>
 
-                <h3 className="mt-2 font-medium text-[#f2f2f2]">
-                  {item.role}
-                </h3>
+        <h2 className="mt-2 text-2xl font-semibold text-[#f2f2f2]">
+          Experience
+        </h2>
 
-                <p className="mt-1 text-sm text-[#a3a3a3]">
-                  {item.organisation}
-                </p>
+        <p className="mt-2 text-sm leading-6 text-[#c9c9c9]">
+          A summary of my education, work experience, and technical background.
+        </p>
+      </div>
 
-                <p className="mt-3 text-sm leading-6 text-[#c9c9c9]">
-                  {item.description}
-                </p>
-              </article>
+      {experience.map((item) => (
+        <article
+          key={`${item.role}-${item.organisation}`}
+          className="border border-[#3a3a3a] bg-[#202020] p-5"
+        >
+          <div className="flex flex-col gap-3 border-b border-[#3a3a3a] pb-4 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <p className="font-mono text-xs uppercase tracking-[0.16em] text-[#d97706]">
+                {item.type}
+              </p>
+
+              <h3 className="mt-2 text-lg font-medium text-[#f2f2f2]">
+                {item.role}
+              </h3>
+
+              <p className="mt-1 text-sm text-[#a3a3a3]">
+                {item.organisation}
+              </p>
+            </div>
+
+            <div className="text-left font-mono text-xs text-[#a3a3a3] sm:text-right">
+              <p>{item.date}</p>
+              <p>{item.location}</p>
+            </div>
+          </div>
+
+          <p className="mt-4 text-sm leading-6 text-[#c9c9c9]">
+            {item.description}
+          </p>
+
+          <ul className="mt-4 list-inside list-disc space-y-1 text-sm leading-6 text-[#bdbdbd]">
+            {item.highlights.map((highlight) => (
+              <li key={highlight}>{highlight}</li>
             ))}
-          </div>
-        </Window>
-      )}
+          </ul>
+        </article>
+      ))}
+    </div>
+  </Window>
+)}
 
-      {openWindows.contact && (
-        <Window {...getWindowProps("contact")}>
-          <div className="space-y-3 text-sm text-[#d0d0d0]">
-            <p className="text-[#a3a3a3]">Contact links and profiles.</p>
+        {openWindows.contact && (
+  <Window {...getWindowProps("contact")}>
+    <div className="space-y-5">
+      <div>
+        <p className="font-mono text-xs uppercase tracking-[0.18em] text-[#a3a3a3]">
+          connect
+        </p>
 
-            <p>
-              <span className="text-[#a3a3a3]">Email:</span> {contact.email}
-            </p>
+        <h2 className="mt-2 text-2xl font-semibold text-[#f2f2f2]">
+          Contact
+        </h2>
 
-            <p>
-              <span className="text-[#a3a3a3]">GitHub:</span>{" "}
-              <a
-                href={contact.github}
-                target="_blank"
-                rel="noreferrer"
-                className="text-[#d97706] hover:underline"
-              >
-                {contact.github}
-              </a>
-            </p>
+        <p className="mt-2 text-sm leading-6 text-[#c9c9c9]">
+          {contact.availability}
+        </p>
+      </div>
 
-            <p>
-              <span className="text-[#a3a3a3]">Website:</span>{" "}
-              <a
-                href={contact.website}
-                target="_blank"
-                rel="noreferrer"
-                className="text-[#d97706] hover:underline"
-              >
-                {contact.website}
-              </a>
-            </p>
+      <div className="space-y-3 border border-[#3a3a3a] bg-[#202020] p-4 text-sm">
+        <p>
+          <span className="text-[#a3a3a3]">Email:</span>{" "}
+          {contact.email}
+        </p>
 
-            <p>
-              <span className="text-[#a3a3a3]">LinkedIn:</span>{" "}
-              {contact.linkedin}
-            </p>
-          </div>
-        </Window>
-      )}
+        <p>
+          <span className="text-[#a3a3a3]">GitHub:</span>{" "}
+          <a
+            href={contact.github}
+            target="_blank"
+            rel="noreferrer"
+            className="text-[#d97706] hover:underline"
+          >
+            {contact.github}
+          </a>
+        </p>
+
+        <p>
+          <span className="text-[#a3a3a3]">Website:</span>{" "}
+          <a
+            href={contact.website}
+            target="_blank"
+            rel="noreferrer"
+            className="text-[#d97706] hover:underline"
+          >
+            {contact.website}
+          </a>
+        </p>
+
+        <p>
+          <span className="text-[#a3a3a3]">LinkedIn:</span>{" "}
+          {contact.linkedin}
+        </p>
+      </div>
+
+      <section>
+        <h3 className="font-mono text-xs uppercase tracking-[0.16em] text-[#a3a3a3]">
+          Areas of interest
+        </h3>
+
+        <div className="mt-3 flex flex-wrap gap-2">
+          {contact.interests.map((interest) => (
+            <span
+              key={interest}
+              className="border border-[#3a3a3a] bg-[#202020] px-2 py-1 text-xs text-[#c9c9c9]"
+            >
+              {interest}
+            </span>
+          ))}
+        </div>
+      </section>
+    </div>
+  </Window>
+)}
 
       {openWindows.assistant && (
         <Window {...getWindowProps("assistant")}>

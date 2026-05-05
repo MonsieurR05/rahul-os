@@ -120,16 +120,43 @@ export const experience = [
     role: "BSc Computer Science Student",
     organisation: "University of the Arts London",
     date: "2024 – 2027",
+    type: "Education",
+    location: "London, UK",
     description:
-      "Studying software development, creative computing, web technologies, algorithms, databases, and human-computer interaction.",
+      "Studying Computer Science with a focus on software development, creative computing, web technologies, algorithms, databases, operating systems, computer networks, and human-computer interaction.",
+    highlights: [
+      "Building full-stack and interactive software projects",
+      "Developing portfolio-ready work across web, backend, and creative computing",
+      "Practising professional software engineering workflows including Git branching, commits, and documentation",
+    ],
   },
-
+  {
+    role: "Member Services Assistant",
+    organisation: "Costco UK",
+    date: "2024 – Present",
+    type: "Work",
+    location: "Southampton, UK",
+    description:
+      "Customer-facing role involving membership checks, receipt checks, floor support, and high-volume member interaction in a fast-paced retail environment.",
+    highlights: [
+      "Handled frequent customer interactions with professionalism and attention to detail",
+      "Supported smooth member flow during busy periods",
+      "Worked with sensitive member information while maintaining accuracy and trust",
+    ],
+  },
   {
     role: "IT / Technical Support Experience",
     organisation: "Medhurst Communications",
     date: "2022",
+    type: "Work Experience",
+    location: "UK",
     description:
       "Built and configured PCs and laptops, installed operating systems and drivers, troubleshot hardware/software issues, and supported client deployments.",
+    highlights: [
+      "Configured devices for schools and business clients",
+      "Installed operating systems, drivers, and software packages",
+      "Gained early experience with hardware setup, troubleshooting, and technical support",
+    ],
   },
 ];
 
@@ -137,4 +164,13 @@ export const contact = {
   email: "MonsieurR9@proton.me",
   github: "https://github.com/MonsieurR05",
   website: "https://www.rahulb.dev/",
+  availability:
+    "Open to software engineering internships, placement opportunities, and collaborative projects.",
+  interests: [
+    "Software engineering",
+    "Full-stack development",
+    "Interactive web experiences",
+    "AI-powered systems",
+    "Creative computing",
+  ],
 };
