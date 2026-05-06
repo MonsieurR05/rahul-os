@@ -13,7 +13,7 @@ const suggestedQuestions = [
 export default function AssistantApp() {
   const [input, setInput] = useState("");
   const [response, setResponse] = useState(
-    "Assistant is connected to local portfolio data. Ask a question or choose a suggested prompt."
+    "Portfolio assistant can answer using the server AI route, with local fallback if the request fails."
   );
   const [isLoading, setIsLoading] = useState(false);
   const [mode, setMode] = useState("local");
@@ -22,9 +22,9 @@ export default function AssistantApp() {
     return projects
       .map(
         (project) =>
-          `${project.title} is a ${project.type.toLowerCase()} with ${project.tech.join(
+          `${project.title} is a ${project.type.toLowerCase()} using ${project.tech.join(
             ", "
-          )}.`
+          )}. ${project.description}`
       )
       .join(" ");
   }
@@ -42,9 +42,7 @@ export default function AssistantApp() {
       .slice(0, 12)
       .join(", ");
 
-    return `${profile.name} is a ${profile.title.toLowerCase()} based in ${
-      profile.location
-    }. ${profile.summary} Key projects include ${projectNames}. The portfolio demonstrates skills including ${mainSkills}.`;
+    return `${profile.name} is a ${profile.title.toLowerCase()} based in ${profile.location}. ${profile.summary} Key projects include ${projectNames}. The portfolio demonstrates skills including ${mainSkills}.`;
   }
 
   function getBackendProjects() {
@@ -56,11 +54,16 @@ export default function AssistantApp() {
       "REST APIs",
       "SQLite",
       "SQL",
+      "Express",
     ];
 
     const backendProjects = projects.filter((project) =>
       project.tech.some((tech) => backendKeywords.includes(tech))
     );
+
+    if (backendProjects.length === 0) {
+      return "That information is not available in Rahul OS.";
+    }
 
     return backendProjects
       .map(
@@ -85,8 +88,29 @@ export default function AssistantApp() {
     const lowerQuestion = question.toLowerCase();
 
     if (
+      lowerQuestion.includes("backend") ||
+      lowerQuestion.includes("api") ||
+      lowerQuestion.includes("database") ||
+      lowerQuestion.includes("rust")
+    ) {
+      return getBackendProjects();
+    }
+
+    if (
+      lowerQuestion.includes("recruiter") ||
+      lowerQuestion.includes("summarise") ||
+      lowerQuestion.includes("summary") ||
+      lowerQuestion.includes("interview") ||
+      lowerQuestion.includes("hire")
+    ) {
+      return getRecruiterSummary();
+    }
+
+    if (
+      lowerQuestion.includes("project") ||
+      lowerQuestion.includes("projects") ||
       lowerQuestion.includes("strongest") ||
-      lowerQuestion.includes("projects")
+      lowerQuestion.includes("best")
     ) {
       return getProjectsSummary();
     }
@@ -97,22 +121,6 @@ export default function AssistantApp() {
       lowerQuestion.includes("stack")
     ) {
       return getSkillsSummary();
-    }
-
-    if (
-      lowerQuestion.includes("recruiter") ||
-      lowerQuestion.includes("summarise") ||
-      lowerQuestion.includes("summary")
-    ) {
-      return getRecruiterSummary();
-    }
-
-    if (
-      lowerQuestion.includes("backend") ||
-      lowerQuestion.includes("api") ||
-      lowerQuestion.includes("database")
-    ) {
-      return getBackendProjects();
     }
 
     if (
@@ -131,12 +139,12 @@ export default function AssistantApp() {
       return `${profile.name} is a ${profile.title.toLowerCase()} based in ${profile.location}. ${profile.summary}`;
     }
 
-    return "I could not match that question to a local portfolio section yet. Try asking about projects, skills, backend work, experience, or a recruiter summary.";
+    return "That information is not available in Rahul OS. Try asking about projects, skills, experience, backend work, or recruiter summaries.";
   }
 
   async function askAssistant(question) {
     setIsLoading(true);
-    setResponse("Thinking...");
+    setResponse("Processing request...");
 
     try {
       const res = await fetch("/api/assistant", {
@@ -153,16 +161,16 @@ export default function AssistantApp() {
         throw new Error(data.error || "Assistant request failed.");
       }
 
-      setMode("ai");
+      setMode("online");
       setResponse(data.answer);
     } catch (error) {
       console.error(error);
 
-      setMode("local fallback");
+      setMode("local");
       setResponse(
         `${generateLocalResponse(
           question
-        )}\n\n[Local fallback used because the AI request failed.]`
+        )}\n\n[Online assistant unavailable. Local Rahul OS data used.]`
       );
     } finally {
       setIsLoading(false);
@@ -186,17 +194,18 @@ export default function AssistantApp() {
   }
 
   return (
-    <div className="space-y-5">
-      <div className="border border-[#2a2a2a] bg-[#242424] p-4 font-mono text-sm">
-        <p className="text-[#f5f5f5]">$ assistant --mode {mode}</p>
-        <p className="mt-2 text-[#666666]">
-          Portfolio assistant can answer using the server AI route, with local
-          fallback if the request fails.
+    <div className="space-y-4 rounded-[1.5rem] bg-[#050505] p-3">
+      <div className="rounded-[1.25rem] border border-[#242424] bg-[#111111] px-4 py-4">
+        <p className="font-mono text-sm text-[#f5f5f5]">
+          $ assistant --mode {mode}
+        </p>
+        <p className="mt-2 text-sm leading-6 text-[#8a8a8a]">
+          Portfolio assistant with server AI routing and local fallback support.
         </p>
       </div>
 
       <section>
-        <h3 className="font-mono text-xs uppercase tracking-[0.16em] text-[#666666]">
+        <h3 className="px-1 text-xs uppercase tracking-[0.22em] text-[#666666]">
           Suggested questions
         </h3>
 
@@ -206,7 +215,7 @@ export default function AssistantApp() {
               key={question}
               onClick={() => handleQuestion(question)}
               disabled={isLoading}
-              className="border border-[#2a2a2a] bg-[#080808] px-3 py-2 text-left text-sm text-[#a3a3a3] transition hover:border-[#f5f5f5] hover:bg-[#0d0d0d] disabled:cursor-not-allowed disabled:opacity-60"
+              className="rounded-[1.1rem] border border-[#242424] bg-[#0d0d0d] px-4 py-3 text-left text-sm text-[#cfcfcf] transition hover:border-[#343434] hover:bg-[#141414] hover:text-[#f5f5f5] disabled:cursor-not-allowed disabled:opacity-60"
             >
               {question}
             </button>
@@ -217,7 +226,7 @@ export default function AssistantApp() {
       <form onSubmit={handleSubmit} className="space-y-3">
         <label
           htmlFor="assistant-question"
-          className="block font-mono text-xs uppercase tracking-[0.16em] text-[#666666]"
+          className="px-1 text-xs uppercase tracking-[0.22em] text-[#666666]"
         >
           Ask about the portfolio
         </label>
@@ -229,28 +238,53 @@ export default function AssistantApp() {
             onChange={(event) => setInput(event.target.value)}
             placeholder="e.g. What project best shows React?"
             disabled={isLoading}
-            className="min-w-0 flex-1 border border-[#2a2a2a] bg-[#242424] px-3 py-2 text-sm text-[#f5f5f5] outline-none placeholder:text-[#6f6f6f] focus:border-[#f5f5f5] disabled:opacity-60"
+            className="min-w-0 flex-1 rounded-[1.1rem] border border-[#242424] bg-[#111111] px-4 py-3 text-sm text-[#f5f5f5] outline-none placeholder:text-[#666666] focus:border-[#3a3a3a] disabled:opacity-60"
           />
 
           <button
             type="submit"
             disabled={isLoading}
-            className="border border-[#f5f5f5] bg-[#242424] px-4 py-2 text-sm text-[#f5f5f5] transition hover:bg-[#1a1a1a] disabled:cursor-not-allowed disabled:opacity-60"
+            className="rounded-[1.1rem] border border-[#d9d9d9] bg-[#e8e8e8] px-4 py-3 text-sm font-semibold text-[#050505] transition hover:bg-[#ffffff] disabled:cursor-not-allowed disabled:opacity-60"
           >
             {isLoading ? "Run..." : "Run"}
           </button>
         </div>
       </form>
 
-      <section className="border border-[#2a2a2a] bg-[#080808] p-4">
-        <h3 className="font-mono text-xs uppercase tracking-[0.16em] text-[#666666]">
+      <section className="rounded-[1.4rem] border border-[#242424] bg-[#0d0d0d] p-4">
+        <h3 className="text-xs uppercase tracking-[0.22em] text-[#666666]">
           Response
         </h3>
 
-        <p className="mt-3 whitespace-pre-line text-sm leading-6 text-[#a3a3a3]">
-          {response}
-        </p>
+      <div className="mt-3 min-h-20">
+        {isLoading ? (
+          <ThinkingAnimation />
+       ) : (
+          <p className="whitespace-pre-line text-sm leading-7 text-[#b8b8b8]">
+            {response}
+          </p>
+        )}
+      </div>
       </section>
+    </div>
+  );
+}
+
+function ThinkingAnimation() {
+  return (
+    <div className="flex items-center gap-3 text-sm text-[#a3a3a3]">
+      <span className="relative flex h-3 w-3">
+        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#f5f5f5] opacity-20" />
+        <span className="relative inline-flex h-3 w-3 rounded-full bg-[#a3a3a3]" />
+      </span>
+
+      <span className="font-mono">assistant is thinking</span>
+
+      <span className="flex gap-1">
+        <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#666666] [animation-delay:-0.3s]" />
+        <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#666666] [animation-delay:-0.15s]" />
+        <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#666666]" />
+      </span>
     </div>
   );
 }
