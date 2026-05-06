@@ -73,8 +73,7 @@ ${item.description}`
     } else if (command === "contact") {
       output = `Email: ${contact.email}
 GitHub: ${contact.github}
-Website: ${contact.website}
-LinkedIn: ${contact.linkedin}`;
+Website: ${contact.website}`;
     } else {
       output = `Command not found: ${rawCommand}
 Type 'help' to view available commands.`;
