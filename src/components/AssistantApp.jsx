@@ -231,14 +231,14 @@ export default function AssistantApp() {
           Ask about the portfolio
         </label>
 
-        <div className="flex gap-2">
+        <div className="flex flex-col gap-2 sm:flex-row">
           <input
             id="assistant-question"
             value={input}
             onChange={(event) => setInput(event.target.value)}
             placeholder="e.g. What project best shows React?"
             disabled={isLoading}
-            className="min-w-0 flex-1 rounded-[1.1rem] border border-[#242424] bg-[#111111] px-4 py-3 text-sm text-[#f5f5f5] outline-none placeholder:text-[#666666] focus:border-[#3a3a3a] disabled:opacity-60"
+            className="rounded-[1.1rem] border border-[#d9d9d9] bg-[#e8e8e8] px-4 py-3 text-sm font-semibold text-[#050505] transition hover:bg-[#ffffff] disabled:cursor-not-allowed disabled:opacity-60 sm:self-auto"
           />
 
           <button

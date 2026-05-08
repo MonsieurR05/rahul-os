@@ -1,7 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { profile, projects, skills, experience, contact } from "@/data/portfolio";
+import {
+  profile,
+  projects,
+  skills,
+  experience,
+  contact,
+} from "@/data/portfolio";
 
 const helpText = `Available commands:
 whoami
@@ -73,7 +79,8 @@ ${item.description}`
     } else if (command === "contact") {
       output = `Email: ${contact.email}
 GitHub: ${contact.github}
-Website: ${contact.website}`;
+Website: ${contact.website}
+LinkedIn: ${contact.linkedin}`;
     } else {
       output = `Command not found: ${rawCommand}
 Type 'help' to view available commands.`;
@@ -89,11 +96,11 @@ Type 'help' to view available commands.`;
   }
 
   return (
-    <div className="h-full rounded-2xl bg-[#050505] p-4 font-mono text-sm">
-      <div className="mb-4 max-h-[46vh] space-y-4 overflow-y-auto pr-2">
+    <div className="h-full rounded-[1.25rem] bg-[#050505] p-3 font-mono text-sm sm:rounded-2xl sm:p-4">
+      <div className="mb-4 max-h-[34dvh] space-y-4 overflow-y-auto pr-2 sm:max-h-[38dvh] xl:max-h-[28vh]">
         <div>
           <p className="text-[#f5f5f5]">$ boot</p>
-          <pre className="mt-2 whitespace-pre-wrap text-[#a3a3a3]">
+          <pre className="mt-2 whitespace-pre-wrap break-words text-[#a3a3a3]">
             RahulOS terminal ready. Type 'help' to view commands.
           </pre>
         </div>
@@ -104,7 +111,7 @@ Type 'help' to view available commands.`;
             ref={index === history.length - 1 ? latestEntryRef : null}
           >
             <p className="text-[#f5f5f5]">$ {entry.command}</p>
-            <pre className="mt-2 whitespace-pre-wrap text-[#a3a3a3]">
+            <pre className="mt-2 whitespace-pre-wrap break-words text-[#a3a3a3]">
               {entry.output}
             </pre>
           </div>
@@ -113,7 +120,7 @@ Type 'help' to view available commands.`;
 
       <form
         onSubmit={handleSubmit}
-        className="flex items-center gap-2 border-t border-[#2a2a2a] pt-3"
+        className="flex items-center gap-2 border-t border-[#242424] pt-3"
       >
         <span className="text-[#f5f5f5]">$</span>
 
