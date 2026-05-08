@@ -13,13 +13,13 @@ export default function Desktop() {
       <main className="flex min-h-dvh items-start justify-center px-3 pb-6 pt-14 sm:px-5 sm:pb-8 sm:pt-16 lg:items-center lg:px-8 lg:pb-10 lg:pt-10">
         <section className="w-full max-w-[1700px] rounded-[1.75rem] border border-[#242424] bg-[#050505] p-3 shadow-[0_40px_120px_rgba(0,0,0,0.65)] sm:rounded-[2rem] sm:p-4 lg:p-5 lg:my-auto">
           <div className="grid items-start gap-4 xl:grid-cols-[minmax(320px,430px)_minmax(0,1fr)_minmax(320px,430px)] xl:items-center xl:gap-5">
-            <div className="order-2 min-w-0 xl:order-1">
+            <div className="order-1 min-w-0 xl:order-1">
               <Panel title="terminal" status="command mode">
                 <TerminalApp />
               </Panel>
             </div>
 
-            <section className="order-1 flex min-w-0 items-center justify-center px-2 py-2 sm:px-4 sm:py-4 xl:order-2">
+            <section className="order-2 flex min-w-0 items-center justify-center px-2 py-6 sm:px-4 sm:py-8 xl:order-2">
               <div className="w-full max-w-2xl text-center">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#666666] sm:text-xs sm:tracking-[0.32em]">
                   local portfolio environment
