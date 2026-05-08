@@ -1,111 +1,3 @@
-import { GoogleGenAI } from "@google/genai";
-import { profile, projects, skills, experience, contact } from "@/data/portfolio";
-
-const ai = new GoogleGenAI({
-  apiKey: process.env.GEMINI_API_KEY,
-});
-
-function buildPortfolioContext() {
-  return `
-PROFILE:
-${JSON.stringify(profile, null, 2)}
-
-PROJECTS:
-${JSON.stringify(projects, null, 2)}
-
-SKILLS:
-${JSON.stringify(skills, null, 2)}
-
-EXPERIENCE:
-${JSON.stringify(experience, null, 2)}
-
-CONTACT:
-${JSON.stringify(contact, null, 2)}
-`;
-}
-
-function buildPrompt(question) {
-  return `
-You are the AI Assistant inside RahulOS, Rahul Bagga's operating-system-inspired portfolio website.
-
-You are not a generic chatbot. You are a portfolio guide that helps visitors understand Rahul's work, skills, experience, and suitability for technical opportunities.
-
-Your role:
-- Answer questions about Rahul using only the portfolio context provided.
-- Explain Rahul's projects clearly and technically.
-- Recommend relevant projects based on skills, technologies, or roles.
-- Summarise Rahul for recruiters, tutors, developers, or collaborators.
-- Compare projects when asked.
-- Map natural-language questions to useful portfolio sections.
-- Suggest navigation actions such as "Try: projects, skills, experience, contact."
-
-Tone:
-- Concise
-- Confident
-- Technical
-- Recruiter-aware
-- Professional
-
-Rules:
-- Do not invent anything.
-- Only answer using the portfolio context provided.
-- If information is missing, say: "That information is not available in RahulOS."
-- Do not say "as an AI language model."
-- Do not mention Gemini, Google, OpenAI, or the underlying model provider.
-- Keep answers short and useful.
-
-PORTFOLIO CONTEXT:
-${buildPortfolioContext()}
-
-VISITOR QUESTION:
-${question}
-`;
-}
-
-function getErrorReason(error) {
-  if (error?.status === 429) {
-    return "quota";
-  }
-
-  if (error?.status === 503) {
-    return "provider_unavailable";
-  }
-
-  if (error?.status === 401 || error?.status === 403) {
-    return "auth";
-  }
-
-  return "provider";
-}
-
-async function generateWithFallback(question) {
-  const models = ["gemini-2.5-flash", "gemini-2.0-flash"];
-
-  let lastError;
-
-  for (const model of models) {
-    try {
-      const response = await ai.models.generateContent({
-        model,
-        contents: buildPrompt(question),
-      });
-
-      return {
-        answer: response.text,
-        model,
-      };
-    } catch (error) {
-      lastError = error;
-      console.error(`Gemini model failed: ${model}`, {
-        status: error?.status,
-        message: error?.message,
-      });
-    }
-  }
-
-  throw lastError;
-}
-
 export async function POST(request) {
   try {
     const { question } = await request.json();
@@ -117,36 +9,50 @@ export async function POST(request) {
       );
     }
 
-    if (!process.env.GEMINI_API_KEY) {
+    const aiUrl = process.env.RAHUL_OS_AI_URL;
+
+    if (!aiUrl) {
       return Response.json(
         {
-          error: "Online assistant unavailable.",
-          reason: "missing_api_key",
+          error: "Local AI backend is not configured.",
+          reason: "missing_ai_url",
         },
         { status: 503 }
       );
     }
 
-    const result = await generateWithFallback(question);
+    const response = await fetch(`${aiUrl}/ask`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ question }),
+    });
+
+    if (!response.ok) {
+      return Response.json(
+        {
+          error: "Local AI backend unavailable.",
+          reason: "local_ai_failed",
+        },
+        { status: 503 }
+      );
+    }
+
+    const data = await response.json();
 
     return Response.json({
-      answer: result.answer,
-      mode: "online",
-      model: result.model,
+      answer: data.answer,
+      mode: "local-ollama",
+      model: data.model,
     });
   } catch (error) {
-    const reason = getErrorReason(error);
-
-    console.error("Gemini assistant API error:", {
-      status: error?.status,
-      reason,
-      message: error?.message,
-    });
+    console.error("RahulOS assistant API error:", error);
 
     return Response.json(
       {
-        error: "Online assistant unavailable.",
-        reason,
+        error: "Assistant unavailable.",
+        reason: "request_failed",
       },
       { status: 503 }
     );
