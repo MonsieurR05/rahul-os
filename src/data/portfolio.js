@@ -131,20 +131,6 @@ export const experience = [
     ],
   },
   {
-    role: "Member Services Assistant",
-    organisation: "Costco UK",
-    date: "2024 – Present",
-    type: "Work",
-    location: "Southampton, UK",
-    description:
-      "Customer-facing role involving membership checks, receipt checks, floor support, and high-volume member interaction in a fast-paced retail environment.",
-    highlights: [
-      "Handled frequent customer interactions with professionalism and attention to detail",
-      "Supported smooth member flow during busy periods",
-      "Worked with sensitive member information while maintaining accuracy and trust",
-    ],
-  },
-  {
     role: "IT / Technical Support Experience",
     organisation: "Medhurst Communications",
     date: "2022",
