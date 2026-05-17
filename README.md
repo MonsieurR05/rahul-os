@@ -1,12 +1,16 @@
-# Rahul OS AI
+# Rahul OS
 
-Dockerized Node/Express AI service for the Rahul OS portfolio assistant.
+An operating-system-inspired portfolio website with a terminal interface, project explorer, and AI assistant layer.
 
-## What it does
-- Accepts portfolio questions through an API
-- Searches structured project/profile data
-- Returns branded assistant responses
-- Designed to run separately from the frontend
+## Features
+- OS-style portfolio interface
+- Terminal-inspired navigation
+- AI assistant panel
+- Project cards and recruiter-focused information
+- Responsive layout
 
 ## Tech Stack
-Node.js, Express, Docker
+Next.js, React, JavaScript, Tailwind CSS
+
+## AI Layer
+Rahul OS connects to a separate local AI backend called rahul-os-ai.
